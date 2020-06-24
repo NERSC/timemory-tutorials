@@ -11,8 +11,12 @@ The `intro-short` tutorial is focused on the command-line tools and the Python A
 
 - Command-line Tools
   - `timemory-avail`
+    - This tools provides information about various components, runtime configuration options, and hardware counters
   - `timem`
+    - This tool is a drop-in replacement for the UNIX `time` tool but provides more metrics
+    - This tool can also be used to run PAPI from the command-line
   - `timemory-run`
+    - This is the dynamic instrumentation tool which will insert timemory measurements into existing binaries
 - Python Interface
   - Decorators and context-managers for single-use (single function or region)
   - Decorators and context-managers for full profiling (every Python interpreter function call within function or region)
