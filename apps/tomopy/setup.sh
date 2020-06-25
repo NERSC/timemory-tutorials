@@ -7,4 +7,5 @@ fi
 
 cd tomopy-source
 
-python -m pip install .
+# python -m pip install .
+python setup.py install
