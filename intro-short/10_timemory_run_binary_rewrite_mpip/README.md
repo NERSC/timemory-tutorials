@@ -1,6 +1,6 @@
 # timemory-run binary rewrite
 
-This example walks through the usage of `timemory-run` tool for dynamically instrumenting an *MPI application* binary and then re-writing the instrumented binary back to the disk. The MPI instrumentation mode is specified by `--mpip` option and the instrumented binary is written to the path specified by the `-o <inst_bin>` option.
+This example walks through the usage of `timemory-run` tool for dynamically instrumenting an *MPI application* binary and then re-writing the instrumented binary back to the disk. The MPI instrumentation support is enabled using the `--mpi` option and the MPI data communication profiling is enabled by `--mpip` option. Both MPI and MPIP options require MPI and GOTCHA support.
 
 ## About timemory-run
 The `timemory-run` tool provides a fine grained control over instrumentation insertion by allowing users to include/exclude functions, files, modules or libraries from instrumentation, choose instrumentation modes, and enable loop level instrumentation. The `timemory-run` tool also allows instrumentation of MPI and/or OpenMP applications as well. **NOTE:** The instrumentation settings such as time or memory measurement units, floating point precision and so on are controlled by setting appropriate environment variables either in system or by passing them as `--env VARIABLE=VALUE` to `timemory-run`.
@@ -8,12 +8,12 @@ The `timemory-run` tool provides a fine grained control over instrumentation ins
 ## Usage: 
 **NOTE:** Make sure the libtimemory.so is in the `LD_LIBRARY_PATH` environment variable before running `timemory-run`.
 ```
-$ timemory-run <OPTIONS> --mpip -o <INSTRUMENTED_BINARY> -- <BINARY>
+$ timemory-run <OPTIONS> --mpi --mpip -o <INSTRUMENTED_BINARY> -- <BINARY>
 ```
 
 ## Example
 ```
-$ timemory-run --mpip --env TIMEMORY_MEMORY_UNITS=B -o mpi_hello_world.inst -- mpi_hello_world
+$ timemory-run --mpi --mpip --env TIMEMORY_MEMORY_UNITS=B -o mpi_hello_world.inst -- mpi_hello_world
 
  [command]: /home/mhaseeb/examples/mpi_hello_world
 
@@ -58,13 +58,13 @@ $ mpirun -n 4 ./mpi_hello_world
 > [timemory_trace_init@'../../../source/trace.cpp':594] rank = 0, pid = 31535, thread = 0, args = wall_clock...
 > [timemory_trace_init@'../../../source/trace.cpp':594] rank = 0, pid = 31537, thread = 0, args = wall_clock...
 > [timemory_trace_init@'../../../source/trace.cpp':594] rank = 0, pid = 31536, thread = 0, args = wall_clock...
-#--------------------- tim::manager initialized [rank=0][id=0][pid=31535] ---------------------#
+#--------------------- tim::manager initialized [rank=0][id=0][pid=4271] ---------------------#
 
-#--------------------- tim::manager initialized [rank=0][id=0][pid=31537] ---------------------#
+#--------------------- tim::manager initialized [rank=0][id=0][pid=4273] ---------------------#
 
-#--------------------- tim::manager initialized [rank=0][id=0][pid=31534] ---------------------#
+#--------------------- tim::manager initialized [rank=0][id=0][pid=4272] ---------------------#
 
-#--------------------- tim::manager initialized [rank=0][id=0][pid=31536] ---------------------#
+#--------------------- tim::manager initialized [rank=0][id=0][pid=4274] ---------------------#
 
 Hello world from processor maeve, rank 0 out of 4 processors
 Hello world from processor maeve, rank 1 out of 4 processors
@@ -101,13 +101,53 @@ Closed 'timemory-mpi-hello-world-output/mpi_comm_data.jpeg'...
 | >>>   |_MPI_Isend_dst_3_tag_0 |      4 |      2 | mpi_comm_data | B      |  32.000 |  8.000 |  8.000 |  8.000 |  0.000 |  100.0 |
 |---------------------------------------------------------------------------------------------------------------------------------|
 
+[wall]|0> Outputting 'timemory-mpi-hello.inst-output/wall.flamegraph.json'...
+[wall]|0> Outputting 'timemory-mpi-hello.inst-output/wall.json'...
+[wall]|0> Outputting 'timemory-mpi-hello.inst-output/wall.txt'...
+Opening 'timemory-mpi-hello.inst-output/wall_0.jpeg' for output...
+Closed 'timemory-mpi-hello.inst-output/wall_0.jpeg'...
+Opening 'timemory-mpi-hello.inst-output/wall_1.jpeg' for output...
+Closed 'timemory-mpi-hello.inst-output/wall_1.jpeg'...
+Opening 'timemory-mpi-hello.inst-output/wall_2.jpeg' for output...
+Closed 'timemory-mpi-hello.inst-output/wall_2.jpeg'...
+Opening 'timemory-mpi-hello.inst-output/wall_3.jpeg' for output...
+Closed 'timemory-mpi-hello.inst-output/wall_3.jpeg'...
+
+|------------------------------------------------------------------------------------------------------------------------|
+|                                        REAL-CLOCK TIMER (I.E. WALL-CLOCK TIMER)                                        |
+|------------------------------------------------------------------------------------------------------------------------|
+|            LABEL             | COUNT  | DEPTH  | METRIC | UNITS  |  SUM   | MEAN   |  MIN   |  MAX   | STDDEV | % SELF |
+|------------------------------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
+| |0>>> MPI_Init(int*, char**) |      1 |      0 | wall   | sec    |  3.441 |  3.441 |  3.441 |  3.441 |  0.000 |  100.0 |
+| |0>>>                        |      1 |      0 | wall   | sec    |  0.000 |  0.000 |  0.000 |  0.000 |  0.000 |    0.0 |
+| |0>>> |_MPI_Irecv            |      4 |      1 | wall   | sec    |  0.000 |  0.000 |  0.000 |  0.000 |  0.000 |  100.0 |
+| |0>>> |_MPI_Isend            |      4 |      1 | wall   | sec    |  0.000 |  0.000 |  0.000 |  0.000 |  0.000 |  100.0 |
+| |1>>> MPI_Init(int*, char**) |      1 |      0 | wall   | sec    |  3.439 |  3.439 |  3.439 |  3.439 |  0.000 |  100.0 |
+| |1>>>                        |      1 |      0 | wall   | sec    |  0.000 |  0.000 |  0.000 |  0.000 |  0.000 |    0.0 |
+| |1>>> |_MPI_Irecv            |      4 |      1 | wall   | sec    |  0.000 |  0.000 |  0.000 |  0.000 |  0.000 |  100.0 |
+| |1>>> |_MPI_Isend            |      4 |      1 | wall   | sec    |  0.000 |  0.000 |  0.000 |  0.000 |  0.000 |  100.0 |
+| |2>>> MPI_Init(int*, char**) |      1 |      0 | wall   | sec    |  3.446 |  3.446 |  3.446 |  3.446 |  0.000 |  100.0 |
+| |2>>>                        |      1 |      0 | wall   | sec    |  0.000 |  0.000 |  0.000 |  0.000 |  0.000 |    0.0 |
+|------------------------------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
+| |2>>> |_MPI_Irecv            |      4 |      1 | wall   | sec    |  0.000 |  0.000 |  0.000 |  0.000 |  0.000 |  100.0 |
+| |2>>> |_MPI_Isend            |      4 |      1 | wall   | sec    |  0.000 |  0.000 |  0.000 |  0.000 |  0.000 |  100.0 |
+| |3>>> MPI_Init(int*, char**) |      1 |      0 | wall   | sec    |  3.452 |  3.452 |  3.452 |  3.452 |  0.000 |  100.0 |
+| |3>>>                        |      1 |      0 | wall   | sec    |  0.000 |  0.000 |  0.000 |  0.000 |  0.000 |    0.0 |
+| |3>>> |_MPI_Irecv            |      4 |      1 | wall   | sec    |  0.000 |  0.000 |  0.000 |  0.000 |  0.000 |  100.0 |
+| |3>>> |_MPI_Isend            |      4 |      1 | wall   | sec    |  0.000 |  0.000 |  0.000 |  0.000 |  0.000 |  100.0 |
+|------------------------------------------------------------------------------------------------------------------------|
 
 
-#---------------------- tim::manager destroyed [rank=2][id=0][pid=31536] ----------------------#
+[metadata::manager::finalize]> Outputting 'timemory-mpi-hello.inst-output/metadata.json'...
 
 
-#---------------------- tim::manager destroyed [rank=3][id=0][pid=31537] ----------------------#
+#---------------------- tim::manager destroyed [rank=2][id=0][pid=4273] ----------------------#
 
 
-#---------------------- tim::manager destroyed [rank=1][id=0][pid=31535] ----------------------#
-```
+#---------------------- tim::manager destroyed [rank=3][id=0][pid=4274] ----------------------#
+
+
+#---------------------- tim::manager destroyed [rank=1][id=0][pid=4272] ----------------------#
+
+
+#---------------------- tim::manager destroyed [rank=0][id=0][pid=4271] ----------------------#

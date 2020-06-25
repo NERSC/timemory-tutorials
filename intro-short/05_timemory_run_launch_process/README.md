@@ -1,6 +1,6 @@
 # timemory-run launch process
 
-This example walks through the usage of `timemory-run` tool for dynamically instrumenting and then launching an application binary. The instrumentation is inserted from the libtimemory.so by default using dyninst library.
+This example walks through the usage of `timemory-run` tool for dynamically instrumenting and then launching an application binary. The instrumentation is inserted from the libtimemory.so by default using dyninst library. The default components used for instrumentation can be specified using `-d <comp1> <comp2> ...` option to `timemory-run`. If no component is specified, then `wall_clock` is used by default.
 
 ## About timemory-run
 The `timemory-run` tool provides a fine grained control over instrumentation insertion by allowing users to include/exclude functions, files, modules or libraries from instrumentation, choose instrumentation modes, and enable loop level instrumentation. The `timemory-run` tool also allows instrumentation of MPI and/or OpenMP applications as well. **NOTE:** The instrumentation settings such as time or memory measurement units, floating point precision and so on are controlled by setting appropriate environment variables either in system or by passing them as `--env VARIABLE=VALUE` to `timemory-run`.

@@ -13,7 +13,7 @@ $ timemory-run <OPTIONS> -o <INSTRUMENTED_BINARY> -- <BINARY>
 
 ## Example
 ```
-$ timemory-run -o lscpu.inst -- /usr/bin/lscpu
+$ timemory-run -d wall_clock cpu_util peak_rss -o lscpu.inst -- /usr/bin/lscpu
 
  [command]: /usr/bin/lscpu
 
@@ -39,9 +39,9 @@ The instrumented executable image is stored in '/home/mhaseeb/repos/haseeb/timem
 ### Test the Instrumented binary
 ```
 $ ./lscpu.inst
-#--------------------- tim::manager initialized [rank=0][id=0][pid=16425] ---------------------#
+#------------------------- tim::manager initialized [id=0][pid=13746] -------------------------#
 
-> [timemory_trace_init@'../source/trace.cpp':594] rank = 0, pid = 16425, thread = 0, args = wall_clock...
+[pid=13746][tid=0][timemory_trace_init@'../source/trace.cpp':594]> rank = 0, pid = 13746, thread = 0, args = wall_clock,cpu_util,peak_rss...
 Architecture:        x86_64
 CPU op-mode(s):      32-bit, 64-bit
 Byte Order:          Little Endian
@@ -56,7 +56,7 @@ CPU family:          6
 Model:               79
 Model name:          Intel(R) Core(TM) i7-6800K CPU @ 3.40GHz
 Stepping:            1
-CPU MHz:             1998.598
+CPU MHz:             2142.482
 CPU max MHz:         4000.0000
 CPU min MHz:         1200.0000
 BogoMIPS:            6799.28
@@ -67,6 +67,32 @@ L2 cache:            256K
 L3 cache:            15360K
 NUMA node0 CPU(s):   0-11
 Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb cat_l3 cdp_l3 invpcid_single pti intel_ppin ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm cqm rdt_a rdseed adx smap intel_pt xsaveopt cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local dtherm ida arat pln pts md_clear flush_l1d
+[peak_rss]|0> Outputting 'timemory-lscpu.inst-output/peak_rss.json'...
+[peak_rss]|0> Outputting 'timemory-lscpu.inst-output/peak_rss.txt'...
+Opening 'timemory-lscpu.inst-output/peak_rss.jpeg' for output...
+Closed 'timemory-lscpu.inst-output/peak_rss.jpeg'...
+
+|------------------------------------------------------------------------------------------------------|
+|MEASURES CHANGES IN THE HIGH-WATER MARK FOR THE AMOUNT OF MEMORY ALLOCATED IN RAM. MAY FLUCTUATE IF SWAP IS ENABLED|
+|------------------------------------------------------------------------------------------------------|
+|  LABEL   | COUNT  | DEPTH  | METRIC   | UNITS  |  SUM   | MEAN   |  MIN   |  MAX   | STDDEV | % SELF |
+|----------|--------|--------|----------|--------|--------|--------|--------|--------|--------|--------|
+| >>> main |      1 |      0 | peak_rss | B      |  0.000 |  0.000 |  0.000 |  0.000 |  0.000 |    0.0 |
+|------------------------------------------------------------------------------------------------------|
+
+[cpu_util]|0> Outputting 'timemory-lscpu.inst-output/cpu_util.json'...
+[cpu_util]|0> Outputting 'timemory-lscpu.inst-output/cpu_util.txt'...
+Opening 'timemory-lscpu.inst-output/cpu_util.jpeg' for output...
+Closed 'timemory-lscpu.inst-output/cpu_util.jpeg'...
+
+|-------------------------------------------------------------------------------------------|
+|                   PERCENTAGE OF CPU-CLOCK TIME DIVIDED BY WALL-CLOCK TIME                 |
+|-------------------------------------------------------------------------------------------|
+|  LABEL   | COUNT | DEPTH | METRIC   | UNITS | SUM  | MEAN | MIN  | MAX  | STDDEV | % SELF |
+|----------|-------|-------|----------|-------|------|------|------|------|--------|--------|
+| >>> main |     1 |     0 | cpu_util | %     | 43.1 | 43.1 | 43.1 | 43.1 |    0.0 |  100.0 |
+|-------------------------------------------------------------------------------------------|
+
 [wall]|0> Outputting 'timemory-lscpu.inst-output/wall.flamegraph.json'...
 [wall]|0> Outputting 'timemory-lscpu.inst-output/wall.json'...
 [wall]|0> Outputting 'timemory-lscpu.inst-output/wall.txt'...
@@ -78,7 +104,7 @@ Closed 'timemory-lscpu.inst-output/wall.jpeg'...
 |----------------------------------------------------------------------------------------------------|
 |  LABEL   | COUNT  | DEPTH  | METRIC | UNITS  |  SUM   | MEAN   |  MIN   |  MAX   | STDDEV | % SELF |
 |----------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
-| >>> main |      1 |      0 | wall   | sec    |  0.024 |  0.024 |  0.024 |  0.024 |  0.000 |  100.0 |
+| >>> main |      1 |      0 | wall   | sec    |  0.023 |  0.023 |  0.023 |  0.023 |  0.000 |  100.0 |
 |----------------------------------------------------------------------------------------------------|
 
 
