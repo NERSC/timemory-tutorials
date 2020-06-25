@@ -1,0 +1,6 @@
+
+# exclude all files
+*
+
+# except .gitignore
+!/.gitignore

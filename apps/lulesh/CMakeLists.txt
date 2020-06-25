@@ -2,10 +2,8 @@ cmake_minimum_required(VERSION 3.11 FATAL_ERROR)
 
 project(lulesh LANGUAGES C CXX)
 
-include(GNUInstallDirs)
-
 if("${CMAKE_BUILD_TYPE}" STREQUAL "")
-    set(CMAKE_BUILD_TYPE "Release" CACHE STRING "CMake build type" FORCE)
+    set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING "CMake build type" FORCE)
 endif()
 
 option(USE_MPI "Enable MPI" ON)
@@ -26,7 +24,7 @@ file(GLOB sources ${PROJECT_SOURCE_DIR}/*.cc)
 add_executable(${PROJECT_NAME} ${sources} ${headers})
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/includes)
 target_link_libraries(${PROJECT_NAME} PRIVATE Kokkos::kokkos lulesh-mpi)
-install(TARGETS ${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(TARGETS ${PROJECT_NAME} DESTINATION bin)
 
 enable_testing()
 if(USE_MPI)
