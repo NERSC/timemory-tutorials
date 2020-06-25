@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd ../../apps/apps-python
-python ./timemory_scoped_sample.py
+python ../../apps/build/python/ex_python_basic
+python ../../apps/build/python/ex_python_intermediate

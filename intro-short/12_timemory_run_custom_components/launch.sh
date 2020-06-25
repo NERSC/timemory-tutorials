@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd ../../apps/build/basic-timemory
-./basic-timemory
+timemory-run --load libcustom_dynamic_instr -o ./lulesh.inst -- ../../apps/build/lulesh/lulesh
+mpirun -n 1 ./lulesh.inst

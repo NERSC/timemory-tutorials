@@ -12,15 +12,15 @@ def fib(n):
 
 if __name__ == "__main__":
     # read command line
-    nfib = int(sys.argv[1]) if len(sys.argv) > 1 else 20
+    nfib = int(sys.argv[1]) if len(sys.argv) > 1 else 25
     nitr = int(sys.argv[2]) if len(sys.argv) > 2 else 10
 
     wc = WallClock("")
     ntot = 0
     for i in range(nitr):
         wc.start()
-        ntot += run(n)
+        ntot += fib(nfib)
         wc.stop()
 
     print("fibonacci({}) x {} iterations = {}".format(nfib, nitr, ntot))
-    print("Total runtime: {:12.6} {}".format(wc.get(), wc.display_units()))
+    print("Total runtime: {:12.6} {}".format(wc.get(), "s"))

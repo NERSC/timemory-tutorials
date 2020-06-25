@@ -1,6 +1,3 @@
 #!/bin/bash
 
-#!/bin/bash
-
-cd ../../apps/build/basic-timemory
-./basic-timemory
+timemory-run --mode region -- ../../apps/build/basic/basic.timemory

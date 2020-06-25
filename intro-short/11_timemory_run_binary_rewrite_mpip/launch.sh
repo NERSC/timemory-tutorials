@@ -1,5 +1,4 @@
 #!/bin/bash
 
-cd ../../apps/build/lulesh
-timemory-run --mpi --mpip -o ./lulesh.inst -- ./lulesh
+timemory-run --mpi --mpip -o ./lulesh.inst -- ../../apps/build/lulesh/lulesh
 mpirun -n 8 ./lulesh.inst

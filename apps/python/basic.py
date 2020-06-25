@@ -4,7 +4,6 @@ import sys
 import json
 import timemory
 from timemory.util import auto_timer
-from timemory.profiler import profile
 
 def fib(n):
     return n if n < 2 else (fib(n-1) + fib(n-2))

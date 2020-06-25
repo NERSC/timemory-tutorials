@@ -8,5 +8,5 @@ The `timemory-run` tool provides a fine grained control over instrumentation ins
 ## Usage
 **NOTE:** Make sure the libtimemory.so is in the `LD_LIBRARY_PATH` environment variable before running `timemory-run`.
 ```
-$ timemory-run [OPTIONS] -p <PID> -- <BINARY> <ARGS>
+$ timemory-run [OPTIONS] --pid <PID> -- <BINARY> <ARGS>
 ```

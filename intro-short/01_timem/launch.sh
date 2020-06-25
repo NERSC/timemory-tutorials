@@ -1,4 +1,3 @@
 #!/bin/bash
 
-cd ../../apps/build/basic
-timem ./basic
+timem ../../apps/build/basic/basic

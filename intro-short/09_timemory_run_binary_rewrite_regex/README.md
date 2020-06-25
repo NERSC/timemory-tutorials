@@ -10,5 +10,3 @@ The `timemory-run` tool provides a fine grained control over instrumentation ins
 ```
 $ timemory-run -I <regex1> <regex2> -E <regex3> -MI <regex5> -ME <regex6> <OPTIONS> -o <INSTRUMENTED_BINARY> -- <BINARY>
 ```
-
-
