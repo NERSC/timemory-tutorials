@@ -3,7 +3,7 @@
 This example walks through the usage of `timemory-run` tool for dynamically instrumenting an *MPI application* binary and then re-writing the instrumented binary back to the disk. The MPI instrumentation support is enabled using the `--mpi` option and the MPI data communication profiling is enabled by `--mpip` option. Both MPI and MPIP options require MPI and GOTCHA support.
 
 ## About timemory-run
-The `timemory-run` tool provides a fine grained control over instrumentation insertion by allowing users to include/exclude functions, files, modules or libraries from instrumentation, choose instrumentation modes, and enable loop level instrumentation. The `timemory-run` tool also allows instrumentation of MPI and/or OpenMP applications as well. **NOTE:** The instrumentation settings such as time or memory measurement units, floating point precision and so on are controlled by setting appropriate environment variables either in system or by passing them as `--env VARIABLE=VALUE` to `timemory-run`.
+See [About timemory-run in 06_timemory_run_launch_process](../06_timemory_run_launch_process/README.md#about-timemory-run).
 
 ## Usage: 
 **NOTE:** Make sure the libtimemory.so is in the `LD_LIBRARY_PATH` environment variable before running `timemory-run`.

@@ -1,3 +1,7 @@
-#!/bin/bash
+#!/bin/bash -e
 
-python ../../apps/build/python/ex_python_standalone
+# path to installed executables
+BIN_DIR=${PWD}/../../bin
+
+# launch the standalone
+python ${BIN_DIR}/standalone.py
