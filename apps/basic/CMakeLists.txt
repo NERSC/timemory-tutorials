@@ -2,14 +2,12 @@ cmake_minimum_required(VERSION 3.11 FATAL_ERROR)
 
 project(basic LANGUAGES C CXX)
 
-include(GNUInstallDirs)
-
 option(USE_MPI "Enable MPI" ON)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if("${CMAKE_BUILD_TYPE}" STREQUAL "")
-    set(CMAKE_BUILD_TYPE "Release" CACHE STRING "CMake build type" FORCE)
+    set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING "CMake build type" FORCE)
 endif()
 
 find_package(timemory REQUIRED COMPONENTS cxx

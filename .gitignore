@@ -38,6 +38,8 @@ CMakeLists.txt.user
 /*.vscode
 
 # build/install
+/workdir
+/scratch
 build-*
 install-*
 build
