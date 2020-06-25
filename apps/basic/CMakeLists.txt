@@ -10,8 +10,9 @@ if("${CMAKE_BUILD_TYPE}" STREQUAL "")
     set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING "CMake build type" FORCE)
 endif()
 
-find_package(timemory REQUIRED COMPONENTS cxx
-    OPTIONAL_COMPONENTS compile-options shared)
+find_package(timemory REQUIRED
+    COMPONENTS cxx
+    OPTIONAL_COMPONENTS shared)
 target_compile_definitions(timemory INTERFACE USE_TIMEMORY)
 
 if(USE_MPI)
