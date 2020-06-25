@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.11 FATAL_ERROR)
 
 project(basic LANGUAGES C CXX)
 
-option(USE_MPI "Enable MPI" ON)
+option(USE_MPI "Enable MPI" OFF)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 

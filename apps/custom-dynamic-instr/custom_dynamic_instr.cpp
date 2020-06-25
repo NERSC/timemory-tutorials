@@ -65,7 +65,10 @@ struct flops_per_bytes : public base<flops_per_bytes, std::array<long long, 2>>
         value = m_hw.get_value();
         accum += value;
     }
-    double get() const { return m_hw.get()[0] / m_hw.get()[1]; }
+    double get() const
+    {
+        return (m_hw.get()[1] > 0.0) ? (m_hw.get()[0] / m_hw.get()[1]) : 0.0;
+    }
 
 private:
     hw_t m_hw;

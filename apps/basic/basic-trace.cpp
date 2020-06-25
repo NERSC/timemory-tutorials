@@ -58,12 +58,12 @@ main(int argc, char** argv)
         fibvalues.push_back(atol(argv[i]));
     if(fibvalues.empty())
     {
-        fibvalues.resize(40);
+        fibvalues.resize(10);
         long n = 0;
         std::generate_n(fibvalues.data(), fibvalues.size(), [&]() { return ++n; });
     }
 
-    puts("Entering OMP region...");
+    puts("Entering Thread region...");
     //
     //  Execute the work
     //

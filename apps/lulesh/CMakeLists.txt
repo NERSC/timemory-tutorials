@@ -6,7 +6,7 @@ if("${CMAKE_BUILD_TYPE}" STREQUAL "")
     set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING "CMake build type" FORCE)
 endif()
 
-option(USE_MPI "Enable MPI" ON)
+option(USE_MPI "Enable MPI" OFF)
 add_library(lulesh-mpi INTERFACE)
 if(USE_MPI)
     find_package(MPI REQUIRED)
