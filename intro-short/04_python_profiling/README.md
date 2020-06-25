@@ -1,12 +1,14 @@
 # python_profiling
 
-This examples walks through the usage of profiler sub-package available in timemory Python package. The `profiler` can be used as decorator, context manager or an object. The `profiler` takes a user-provided list of timemory components as argument which are used for profiling. Further, the *flat* and *timeline* profiling modes can be controlled by providing `flat` and `timeline` arguments to the profiler or by setting `TIMEMORY_FLAT_PROFILE` and `TIMEMORY_TIMELINE_PROFILE` environment variables respectively.
+This example walks through the usage of profiler sub-package available in timemory Python package. The `profiler` can be used as decorator, context manager or an object. The `profiler` takes a user-provided list of timemory components as argument which are used for profiling. Further, the *flat* and *timeline* profiling modes can be controlled by providing `flat` and `timeline` arguments to the profiler or by setting `TIMEMORY_FLAT_PROFILE` and `TIMEMORY_TIMELINE_PROFILE` environment variables or by setting/unsetting `timemory.settings.flat_profile` and `timemory.settings.timeline_profile` respectively.
 
 ## Usage
 The following code snippets demonstrates the use of `profiler` as decorator, context manager and object. In all cases, we will profile the `fibonacci(nfib=18)` function using "wall_clock" and "peak_rss" compoenents.
 
 **Decorator**
 ```
+from timemory.profiler import profile
+
 @profile(["wall_clock", "peak_rss"], flat=False, timeline=False)
 def profile_decorator(nfib=3):
     return fibonacci(nfib)
@@ -20,7 +22,9 @@ def main():
 **Object**
 ```
 def main():
-    prof = profile(["wall_clock", "peak_rss"], flat=False, timeline=False)
+    timemory.settings.flat_profile = False
+    timemory.settings.timeline_profile = False
+    prof = profile(["wall_clock", "peak_rss"])
     prof.start()
     profile_object(nfib=3)
     return

@@ -1,21 +1,23 @@
 # python_scoped_utilities
 
-This examples walks through the scoped utilities available in timemory Python package. These utilities include `auto_timer`, `marker`, `rss_usage` and `timer`, and provide instrumentation capabilities either as decorators or context managers. The `marker` utility allows instrumentation using a custom user-provided list of timemory components whereas the `auto_timer` and `rss_usage` utilities use timemory components relevant to timing, and rss measurements respectively. The following code snippets demonstrates the use of `timemory.util.marker` utility as decorator and context manager respectively. In both cases, the marker uses "wall_clock" and "peak_rss" components components for instrumentation.
+This example walks through the scoped utilities available in timemory Python package. These utilities include `auto_timer`, `marker`, `rss_usage` and `timer`, and provide instrumentation capabilities either as decorators or context managers. The `marker` utility allows instrumentation using a custom user-provided list of timemory components whereas the `auto_timer` and `rss_usage` utilities use timemory components relevant to timing, and rss measurements respectively. The following code snippets demonstrates the use of `timemory.util.marker` utility as decorator and context manager respectively. In both cases, the marker uses "wall_clock" and "peak_rss" components components for instrumentation.
 **Decorator**
 ```
-@timemory.util.marker(components=("wall_clock", timemory.component.peak_rss))
+from timemory.util import marker
+
+@marker(components=("wall_clock", timemory.component.peak_rss))
 def fib_decorator(n=35):
     return fibonacci(n)
 ```
 **Context Manager**
 ```
 def main():
-    with timemory.util.marker(get_config(["wall_clock", "peak_rss"]), key="marker_ctx_manager"):
+    with marker(get_config(["wall_clock", "peak_rss"]), key="marker_ctx_manager"):
         fibonacci(35)
 ```
 
 ## Example
-Instrument fibonacci(n=35) function using timemory.util.marker both as decorator and context manager using "wall_clock" and "peak_rss" components.
+Instrument fibonacci(n=35) function using `marker` both as decorator and context manager using "wall_clock" and "peak_rss" components.
 ```
 $ python3.7 fibonacci_example.py
 #--------------------- tim::manager initialized [rank=0][id=0][pid=13417] ---------------------#
