@@ -11,11 +11,19 @@ cp ${BIN_DIR}/basic.trace ./09_no_impl
 cp ${BIN_DIR}/basic.trace ./09_no_impl_or_allreduce
 
 # exclude all functions matching pattern 'impl_*'
-timemory-run -E 'impl_*' -o ./09_no_impl.inst -- ./09_no_impl
+timemory-run \
+    -E 'impl_*' \
+    -o ./09_no_impl.inst \
+    -- ./09_no_impl
 # run instrumented exe
 ./09_no_impl.inst
 
 # exclude all functions which start with 'impl' or 'allreduce'
-timemory-run -E '^(impl|allreduce)' -o ./09_no_impl_or_allreduce.inst -- ./09_no_impl_or_allreduce
+# enable instrumenting C++ standard library functions
+timemory-run \
+    -E '^(impl|allreduce)' \
+    --stdlib \
+    -o ./09_no_impl_or_allreduce.inst \
+    -- ./09_no_impl_or_allreduce
 # run instrumented exe
 ./09_no_impl_or_allreduce.inst
