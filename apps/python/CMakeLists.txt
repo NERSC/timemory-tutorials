@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.11 FATAL_ERROR)
 project(Python LANGUAGES C CXX)
 
 find_package(PythonInterp REQUIRED)
-
 foreach(_FILE basic intermediate profiler standalone)
     configure_file(${PROJECT_SOURCE_DIR}/${_FILE}.py
         ${CMAKE_BINARY_DIR}/${_FILE}.py @ONLY)

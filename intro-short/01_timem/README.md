@@ -1,9 +1,11 @@
 # timem
 
-This example walks through the usage of `timem` binary. The `timem` binary can be used to profile and obtain performance measurements of an application binary. The measurements include wall clock time, user time, system time, cpu time, percentage cpu utilization, peak resident dataset size, consumed virtual memory, major and minor page faults and so on. CAUTION: Using timem in MPI context may lead to unexpected errors.
+This example walks through the usage of `timem` tool. The `timem` binary can be used to profile and obtain performance measurements of an application binary. The measurements include wall clock time, user time, system time, cpu time, percentage cpu utilization, peak resident dataset size, consumed virtual memory, major and minor page faults and so on. CAUTION: Using timem in MPI context may lead to unexpected errors.
 
-Usage: $> timem [options...] -- <CMD> <ARGS>
-
+## Usage
+### Default Usage:
+```
+$ timem [options...] -- <CMD> <ARGS>
 Options:
     -h, --help                     Shows this page
     --debug                        Debug output
@@ -13,9 +15,12 @@ Options:
     -e, --events                   Set the hardware counter events to record
     -s, --shell                    Enable launching command via a shell command (if no arguments, $SHELL is used)
     --shell-flags                  Set the shell flags to use (pass as single string as leading dashes can confuse parser) [default: -i]
+```
 
-
-SAMPLE: $> timem -- hello_and_vector_addition
+### Example:
+Profile a C++ application that says hello world and then add two vectors
+```
+$ timem -- hello_and_vector_addition
 Hello World !!
 Addition Done !!
 [timem] measurement totals:
@@ -37,3 +42,4 @@ Addition Done !!
         0.003559 KB/sec written
      12859539690 Total cycles
      15085135241 Instr completed
+```

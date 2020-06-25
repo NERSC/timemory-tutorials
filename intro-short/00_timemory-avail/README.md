@@ -1,11 +1,12 @@
 # timemory-avail
 
-This example walks through the usage of `timemory-avail` binary. The `timemory-avail` binary can be run with a combination of flags in order to display information about the timemory compoenents availability, descriptions, return types and enumeration IDs. The `timemory-avail` binary can also be used to display timemory's runtime settings (environment variables), hardware counter availability, and so on. The settings/information data can be displayed in markdown format as well as can be stored onto a file. 
+This example walks through the usage of `timemory-avail` tool. The `timemory-avail` binary can be run with a combination of flags in order to display information about the timemory compoenents availability, descriptions, return types and enumeration IDs. The `timemory-avail` binary can also be used to display timemory's runtime settings (environment variables), hardware counter availability, and so on. The settings/information data can be displayed in markdown format as well as can be stored onto a file. 
 
-USAGE: $> timemory-avail -h
-RESULT: All available options for timemory-avail
-
-SAMPLE: $> timemory-avail -h
+## Usage
+### Available Options:
+Get all available options for timemory-avail using `-h` flag
+```
+$ timemory-avail -h
 Usage: timemory-avail [options...]
 
 Options:
@@ -24,13 +25,12 @@ Options:
     -M, --markdown                 Write data in markdown
     -H, --hw-counters              Write the available hardware counters
     -O, --output                   Write results to file
+```
 
-// ----------------------------------------------------------------------------------------- //
-
-DEFAULT: $> timemory-avail
-RESULT: Information about component availability
-
-SAMPLE: $> timemory-avail
+### Default Use: 
+Get information about component availability
+```
+$ timemory-avail
 |------------------------------------------|---------------|
 |                 COMPONENT                |   AVAILABLE   |
 |------------------------------------------|---------------|
@@ -103,3 +103,4 @@ SAMPLE: $> timemory-avail
 | wall_clock                               |     true      |
 | written_bytes                            |     true      |
 |------------------------------------------|---------------|
+```
