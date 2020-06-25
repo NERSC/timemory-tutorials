@@ -1,3 +1,7 @@
-#!/bin/bash
+#!/bin/bash -e
 
-python ../../apps/build/python/ex_python_profiler
+# path to installed executables
+BIN_DIR=${PWD}/../../bin
+
+# launch the profiler app
+python ${BIN_DIR}/profiler.py

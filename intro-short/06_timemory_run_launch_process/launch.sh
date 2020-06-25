@@ -1,5 +1,13 @@
-#!/bin/bash
+#!/bin/bash -e
+#
+# NOTE: Applications built with MPI may abort when launched via timemory-run
+#
 
-timemory-run -- ../../apps/build/basic/basic
+# path to installed executables
+BIN_DIR=${PWD}/../../bin
 
-timemory-run -d wall_clock cpu_util peak_rss -- ../../apps/build/basic/basic
+# copy over executable(s) to modify
+cp ${BIN_DIR}/basic.trace ./06_launch
+
+# launch
+timemory-run -- ./06_launch

@@ -3,7 +3,8 @@
 This example walks through the usage of individual timemory components for instrumentation purposes. The individual components are available in timemory.components sub-package. The timemory components can be instantiated and can be used to in-source instrument any Python code using the available class functions. For instance, the following code snippet creates an instances of `wall_clock` and `cpu_util` components for corresponding instrumentation.
 
 ## Example
-```
+
+```python
 ''' contents of components.py '''
 
 import timemory
@@ -27,8 +28,10 @@ data2 = cutil.get()
 
 timemory.finalize()
 ```
-## Expected Output
-```
+
+## Output
+
+```console
 $ python components.py
 #--------------------- tim::manager initialized [rank=0][id=0][pid=14545] ---------------------#
 

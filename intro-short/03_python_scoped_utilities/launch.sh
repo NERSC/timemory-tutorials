@@ -1,4 +1,10 @@
-#!/bin/bash
+#!/bin/bash -e
 
-python ../../apps/build/python/ex_python_basic
-python ../../apps/build/python/ex_python_intermediate
+# path to installed executables
+BIN_DIR=${PWD}/../../bin
+
+# launch the basic app
+python ${BIN_DIR}/basic.py
+
+# launch the intermediate app
+python ${BIN_DIR}/intermediate.py
