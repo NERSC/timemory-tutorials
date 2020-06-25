@@ -47,3 +47,6 @@ install
 CMakeCache.txt
 CMakeFiles
 *~
+
+# timemory output
+timemory-*-output
