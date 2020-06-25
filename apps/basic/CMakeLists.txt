@@ -22,11 +22,11 @@ endif()
 
 find_package(Threads)
 
-add_executable(${PROJECT_NAME}           basic.cpp           basic.hpp)
-add_executable(${PROJECT_NAME}.timemory  basic-timemory.cpp  basic.hpp)
+add_executable(${PROJECT_NAME}.trace  basic-trace.cpp  basic.hpp)
+add_executable(${PROJECT_NAME}.region basic-region.cpp basic.hpp)
 
-target_link_libraries(${PROJECT_NAME}          ${_MPI} Threads::Threads)
-target_link_libraries(${PROJECT_NAME}.timemory ${_MPI} Threads::Threads timemory)
+target_link_libraries(${PROJECT_NAME}.trace  ${_MPI} Threads::Threads)
+target_link_libraries(${PROJECT_NAME}.region ${_MPI} Threads::Threads timemory)
 
-install(TARGETS ${PROJECT_NAME}          DESTINATION bin)
-install(TARGETS ${PROJECT_NAME}.timemory DESTINATION bin)
+install(TARGETS ${PROJECT_NAME}.trace  DESTINATION bin)
+install(TARGETS ${PROJECT_NAME}.region DESTINATION bin)
