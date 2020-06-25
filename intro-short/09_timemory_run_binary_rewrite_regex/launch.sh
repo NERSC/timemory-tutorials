@@ -27,3 +27,4 @@ timemory-run \
     -- ./09_no_impl_or_allreduce
 # run instrumented exe
 ./09_no_impl_or_allreduce.inst
+

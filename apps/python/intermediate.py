@@ -1,4 +1,4 @@
-#!@PYTHON_EXECUTABLE@
+#!/global/project/projectdirs/m1759/timemory-tutorial/spack/opt/spack/cray-cnl7-skylake_avx512/gcc-7.3.0/python-3.7.7-2al4c7otz3ozjcengqvynx2jzxzcrisf/bin/python
 
 import sys
 import json
@@ -31,11 +31,12 @@ if __name__ == "__main__":
 
     run(n)
 
+    timemory.finalize()
     # Get the results as dictionary
-    data = timemory.get()
+    #data = timemory.get()
 
     # dump the output in pretty JSON
-    print("\n{}".format(json.dumps(data, indent=4, sort_keys=True)))
+    #print("\n{}".format(json.dumps(data, indent=4, sort_keys=True)))
 
     # suppress output
-    timemory.settings.auto_output = False
+    #timemory.settings.auto_output = False

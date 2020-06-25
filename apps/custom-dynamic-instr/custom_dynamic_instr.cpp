@@ -30,10 +30,10 @@ using namespace tim::component;
 //
 //--------------------------------------------------------------------------------------//
 //
-TIMEMORY_DECLARE_COMPONENT(flops_per_bytes)
-TIMEMORY_STATISTICS_TYPE(component::flops_per_bytes, double)
+TIMEMORY_DECLARE_COMPONENT(inst_per_cycle)
+TIMEMORY_STATISTICS_TYPE(component::inst_per_cycle, double)
 #if !defined(TIMEMORY_USE_PAPI)
-TIMEMORY_DEFINE_CONCRETE_TRAIT(is_available, component::flops_per_bytes, false_type)
+TIMEMORY_DEFINE_CONCRETE_TRAIT(is_available, component::inst_per_cycle, false_type)
 #endif
 //
 //--------------------------------------------------------------------------------------//
@@ -42,15 +42,15 @@ namespace tim
 {
 namespace component
 {
-struct flops_per_bytes : public base<flops_per_bytes, std::array<long long, 2>>
+struct inst_per_cycle : public base<inst_per_cycle, std::array<long long, 2>>
 {
     using value_type = std::array<long long, 2>;
-    using hw_t       = tim::component::papi_tuple<PAPI_DP_OPS, PAPI_LST_INS>;
+    using hw_t       = tim::component::papi_tuple<PAPI_TOT_INS, PAPI_TOT_CYC>;
 
-    static std::string label() { return "flops_per_bytes"; }
+    static std::string label() { return "inst_per_cycle"; }
     static std::string description()
     {
-        return "double-precision flops per load-store instr";
+        return "number of instructions per cycle";
     }
     static void thread_init(storage_type*) { hw_t::thread_init(nullptr); }
 
@@ -63,11 +63,11 @@ struct flops_per_bytes : public base<flops_per_bytes, std::array<long long, 2>>
     {
         m_hw.stop();
         value = m_hw.get_value();
-        accum += value;
-    }
+	accum = m_hw.get_accum();
+    }    
     double get() const
     {
-        return (m_hw.get()[1] > 0.0) ? (m_hw.get()[0] / m_hw.get()[1]) : 0.0;
+        return (accum[1] > 0.0) ? (accum[0] / (1.0 * accum[1])) : 0.0;
     }
 
 private:
@@ -93,13 +93,14 @@ timemory_register_custom_dynamic_instr()
     timemory_add_components("monotonic_clock");
 
     // if PAPI enabled at compile-time and run-time
-    using hw_t = typename flops_per_bytes::hw_t;
+    using hw_t = typename inst_per_cycle::hw_t;
     if(tim::trait::runtime_enabled<hw_t>::get())
     {
+	hw_t::configure();
         // used by timemory when --mode=trace
-        user_trace_bundle::configure<flops_per_bytes>();
+        user_trace_bundle::configure<inst_per_cycle>();
         // used by timemory when --mode=region
-        user_global_bundle::configure<flops_per_bytes>();
+        user_global_bundle::configure<inst_per_cycle>();
     }
 }
 //

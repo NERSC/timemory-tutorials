@@ -4,6 +4,7 @@ if { ! [is-loaded cori-gpu] } { module purge }
 
 module load esslurm
 module load cmake
+module unload gcc
 module load gcc/7.3.0
 module load mpich/3.3.1-debug
 

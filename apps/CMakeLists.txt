@@ -10,8 +10,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIR ${CMAKE_BINARY_DIR})
 set(CMAKE_LIBRARY_OUTPUT_DIR ${CMAKE_BINARY_DIR})
 set(CMAKE_ARCHIVE_OUTPUT_DIR ${CMAKE_BINARY_DIR})
 
-add_subdirectory(lulesh)
 add_subdirectory(basic)
 add_subdirectory(python)
-add_subdirectory(tomopy)
 add_subdirectory(custom-dynamic-instr)
+
+# add_subdirectory(lulesh)
+# add_subdirectory(tomopy)
