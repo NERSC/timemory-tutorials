@@ -1,9 +1,38 @@
 # timemory-tutorials
-Tutorials for Timemory
+
+This repository is intended to provide walk-through tutorials for using timemory ([Github](https://github.com/NERSC/timemory)) ([Documentation](https://timemory.readthedocs.io)) for performance measurement and analysis.
 
 ## Applications
 
 The application folder contains various C, C++, and Python for use in the tutorials. It is recommended to use Spack to install timemory and various dependencies. Many folders contain a `spack.sh` script that can be tweaked as needed.
+
+### Building Applications
+
+A build script is provided in `apps/build.sh`. Any additional CMake commands can be passed to the scripts (e.g. `-DUSE_MPI=ON`) and the executables and libraries will be installed to the `bin` and `lib` folder.
+
+```console
+cd apps
+./build.sh -DUSE_MPI=OFF
+```
+
+### Setup
+
+From the root directory of the repository:
+
+```
+source ./setup-env.sh
+```
+
+## Modules
+
+This repository provides modulefiles for known HPC systems. Execute `source setup-env.sh` or run `module use modulefiles`.
+
+### Example
+
+```console
+source setup-env.sh
+module use timemory-tutorials/cori-gpu
+```
 
 ## Short Introduction
 
