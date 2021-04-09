@@ -10,17 +10,17 @@ Duration: ~3 hours
 
 This repository is intended to provide walk-through tutorials for using timemory ([Github](https://github.com/NERSC/timemory)) ([Documentation](https://timemory.readthedocs.io)) for performance measurement and analysis.
 
-| Topic                                    | Estimated Duration |
-| ---------------------------------------- | :----------------: |
-| Introduction                             |     30 minutes     |
-| Command Line Tools (D)                   |     10 minutes     |
-| Command Line Tools (E)                   |     30 minutes     |
-| Library API (P)                          |     10 minutes     |
-| Library API (E)                          |     30 minutes     |
-| Python API and tools (P)                 |     10 minutes     |
-| Python API and tools (D, E)              |     30 minutes     |
-| Visualizing and Analyzing Results (P, D) |     15 minutes     |
-| __Total__                                |    165 minutes     |
+| Topic                                    | Estimated Duration |                                                                |
+| ---------------------------------------- | :----------------: | :------------------------------------------------------------: |
+| Introduction                             |     30 minutes     | [README](tutorial/introduction/README.md)                      |
+| Command Line Tools (D)                   |     10 minutes     | [README](tutorial/command-line-tools/README.md)                |
+| Command Line Tools (E)                   |     30 minutes     | [README](tutorial/command-line-tools/README.md)                |
+| Library API (P)                          |     10 minutes     | [README](tutorial/library-api/README.md)                       |
+| Library API (E)                          |     30 minutes     | [README](tutorial/library-api/README.md)                       |
+| Python API and tools (P)                 |     10 minutes     | [README](tutorial/python-api-and-tools/README.md)              |
+| Python API and tools (D, E)              |     30 minutes     | [README](tutorial/python-api-and-tools/README.md)              |
+| Visualizing and Analyzing Results (P, D) |     15 minutes     | [README](tutorial/visualizing-and-analyzing-results/README.md) |
+| __Total__                                |    165 minutes     |                                                                |
 
 * (P) &#8594; Presentation
 * (E) &#8594; Exercises
