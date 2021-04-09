@@ -18,7 +18,6 @@ The materials for Day 2 of the tutorial are in the `tutorial-day-2` folder.
 Day 2 focuses on the toolkit features of timemory and will teach you how to leverage timemory
 to build your own extensions, libraries, and tools.
 
-
 | Topic                                    | Estimated Duration |                                                                      |
 | ---------------------------------------- | :----------------: | :------------------------------------------------------------------: |
 | Introduction                             |     30 minutes     |           [README](tutorial-day-1/introduction/README.md)            |
