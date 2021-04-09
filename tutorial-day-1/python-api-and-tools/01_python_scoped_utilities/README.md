@@ -2,6 +2,36 @@
 
 This example walks through the scoped utilities available in timemory Python package. These utilities include `auto_timer`, `marker`, `rss_usage` and `timer`, and provide instrumentation capabilities either as decorators or context managers. The `marker` utility allows instrumentation using a custom user-provided list of timemory components whereas the `auto_timer` and `rss_usage` utilities use timemory components relevant to timing, and rss measurements respectively. The following code snippets demonstrates the use of `timemory.util.marker` utility as decorator and context manager respectively. In both cases, the marker uses "wall_clock" and "peak_rss" components components for instrumentation.
 
+## Exercise
+
+* Import timemory
+
+```python
+import timemory
+from timemory.util import marker
+```
+
+* Add timemory finalization at the end of main
+
+```python
+timemory.finalize()
+```
+
+* Use decorator either fib or run function with a marker
+* The first argument for a marker should be a list of components
+
+```python
+@marker(["wall_clock"])
+def run(n):
+    # ...
+```
+
+* Execute code
+
+```console
+./basic.py 15
+```
+
 ## Decorator
 
 ```python
