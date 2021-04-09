@@ -4,11 +4,20 @@
 
 ### Overview
 
-Date: April 19th, 2021
+> Day 1: April 19th, 2021
 
-Duration: ~3 hours
+> Day 2: April 26th, 2021
 
-This repository is intended to provide walk-through tutorials for using timemory ([Github](https://github.com/NERSC/timemory)) ([Documentation](https://timemory.readthedocs.io)) for performance measurement and analysis.
+This repository is intended to provide walk-through tutorials for using timemory ([Github](https://github.com/NERSC/timemory)) ([Documentation](https://timemory.readthedocs.io)) for software monitoring (performance analysis, debugging, logging).
+The pre-built tools and libraries primarily focus on performance analysis.
+
+The tutorial is split into two sections/days.
+The materials for Day 1 of the tutorial are in the `tutorial-day-1` folder.
+Day 1 focuses on the pre-built command-line tools, libraries, and python bindings.
+The materials for Day 2 of the tutorial are in the `tutorial-day-2` folder.
+Day 2 focuses on the toolkit features of timemory and will teach you how to leverage timemory
+to build your own extensions, libraries, and tools.
+
 
 | Topic                                    | Estimated Duration |                                                                      |
 | ---------------------------------------- | :----------------: | :------------------------------------------------------------------: |
@@ -63,23 +72,22 @@ cd apps
 From the root directory of the repository:
 
 ```console
-source ./setup-env.sh
+source ./scripts/setup-env.sh
 ```
 
 ### Modules
 
-This repository provides modulefiles for known HPC systems. Execute `source setup-env.sh` or run `module use modulefiles`.
+This repository provides modulefiles for known HPC systems. Execute `source scripts/setup-env.sh` or run `module use modulefiles`.
 
 #### Example
 
 ```console
-source setup-env.sh
+source scripts/setup-env.sh
 module use timemory-tutorials/cori-gpu
 ```
 
 ## Short Introduction
 
-The `intro-short` tutorial is focused on the command-line tools and the Python API.
 
 - Command-line Tools
   - `timemory-avail`
