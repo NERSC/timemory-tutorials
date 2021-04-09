@@ -1,12 +1,55 @@
 # timemory-tutorials
 
+## ECP 2021 Tutorial
+
+### Overview
+
+Date: April 19th, 2021
+
+Duration: ~3 hours
+
 This repository is intended to provide walk-through tutorials for using timemory ([Github](https://github.com/NERSC/timemory)) ([Documentation](https://timemory.readthedocs.io)) for performance measurement and analysis.
 
-## Applications
+| Topic                                    | Estimated Duration |
+| ---------------------------------------- | :----------------: |
+| Introduction                             |     30 minutes     |
+| Command Line Tools (D)                   |     10 minutes     |
+| Command Line Tools (E)                   |     30 minutes     |
+| Library API (P)                          |     10 minutes     |
+| Library API (E)                          |     30 minutes     |
+| Python API and tools (P)                 |     10 minutes     |
+| Python API and tools (D, E)              |     30 minutes     |
+| Visualizing and Analyzing Results (P, D) |     15 minutes     |
+| __Total__                                |    165 minutes     |
+
+* (P) &#8594; Presentation
+* (E) &#8594; Exercises
+* (D) &#8594; Demo
+
+### Resources
+
+#### Docker Container
+
+```console
+docker pull nersc/timemory:ecp-2021
+docker run -it --rm ...
+```
+
+#### NERSC Training Account
+
+Instructions for creating training account
+
+#### Local Installation Instructions
+
+```console
+./install.sh
+```
+
+### Applications
 
 The application folder contains various C, C++, and Python for use in the tutorials. It is recommended to use Spack to install timemory and various dependencies. Many folders contain a `spack.sh` script that can be tweaked as needed.
 
-### Building Applications
+#### Building Applications
 
 A build script is provided in `apps/build.sh`. Any additional CMake commands can be passed to the scripts (e.g. `-DUSE_MPI=ON`) and the executables and libraries will be installed to the `bin` and `lib` folder.
 
@@ -15,19 +58,19 @@ cd apps
 ./build.sh -DUSE_MPI=OFF
 ```
 
-### Setup
+#### Setup
 
 From the root directory of the repository:
 
-```
+```console
 source ./setup-env.sh
 ```
 
-## Modules
+### Modules
 
 This repository provides modulefiles for known HPC systems. Execute `source setup-env.sh` or run `module use modulefiles`.
 
-### Example
+#### Example
 
 ```console
 source setup-env.sh
@@ -50,4 +93,3 @@ The `intro-short` tutorial is focused on the command-line tools and the Python A
   - Decorators and context-managers for single-use (single function or region)
   - Decorators and context-managers for full profiling (every Python interpreter function call within function or region)
   - Stand-alone Components (e.g. Python classes for each component)
-  
