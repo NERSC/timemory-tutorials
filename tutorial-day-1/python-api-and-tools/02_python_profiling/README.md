@@ -89,7 +89,7 @@ if __name__ == "__main__":
 
 ## Exercise
 
-1. Run the following commands on `example.py` without modifying the python script:
+### 1. Run the following commands on `example.py` without modifying the python script:
 
 ```console
 python -m timemory.trace         -d timemory-trace-output   -- ./example.py
@@ -101,7 +101,7 @@ python -m timemory.line_profiler -v                         -- ./example.py
 > lines of code executed, respectively, while the line-profiler will produce nothing: it only works
 > when `@profile` is added.
 
-2. Add `@profile` to the fibonacci and inefficient functions.
+### 2. Add `@profile` to the fibonacci and inefficient functions.
 
 ```python
 @profile
@@ -116,7 +116,7 @@ def inefficient(n):
 > Run the same commands as before and you will note that the line-profiler produces
 > output now but the timemory profiler and tracer provide the same output as before.
 
-3. Add `-b` to the timemory profiler and tracer commands to limit the scope to built-ins
+### 3. Add `-b` to the timemory profiler and tracer commands to limit the scope to built-ins
 
 ```console
 python -m timemory.trace         -b -d timemory-builtin-trace-output   -- ./example.py
@@ -128,7 +128,7 @@ python -m timemory.line_profiler -v                                    -- ./exam
 > __*and*__ the functions which are called within these functions. Add `--only-files example.py`
 > to limit the profiling to the exact same set of lines as the line-profiler.
 
-4. Select a different component
+### 4. Select a different component
 
 ```console
 python -m timemory.trace         -c cpu_clock -b -d timemory-builtin-trace-output   -- ./example.py
@@ -136,7 +136,7 @@ python -m timemory.profiler      -c cpu_clock -b -d timemory-builtin-profile-out
 python -m timemory.line_profiler -c cpu_clock -v                                    -- ./example.py
 ```
 
-5. Modify example.py directly to use the profiler or tracer via a decorator, context-manager, or object.
+### 5. Modify example.py directly to use the profiler or tracer via a decorator, context-manager, or object.
 
 ```python
 @profile(["wall_clock"], flat=True)
@@ -176,7 +176,7 @@ def run(nfib):
 
 ```
 
-6. Configure the profiler and tracer settings
+### 6. Configure the profiler and tracer settings
 
 ```python
 from timemory.profiler import config as profiler_config
@@ -192,7 +192,7 @@ print(help(tracer_config))
 tracer_config.only_filenames = [__file__]
 ```
 
-### Decorator
+#### Decorator
 
 ```python
 from timemory.profiler import profile
@@ -202,7 +202,7 @@ def profile_decorator(nfib=3):
     return fibonacci(nfib)
 ```
 
-### Context Manager
+#### Context Manager
 
 ```python
 def main():
@@ -210,7 +210,7 @@ def main():
         ans = fibonacci(nfib=3)
 ```
 
-### Object
+#### Object
 
 ```python
 def main():
