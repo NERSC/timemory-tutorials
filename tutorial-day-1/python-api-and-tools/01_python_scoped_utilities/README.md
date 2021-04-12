@@ -127,6 +127,20 @@ timemory.settings.timeline_profile = True
 timemory.settings.cout_output = False
 ```
 
+* Get data in python
+
+```python
+# Get the results as dictionary
+data = timemory.get(hierarchy=False, components=["wall_clock"])
+
+# dump the output in pretty JSON
+with open("output.json", "w") as w:
+    print("Outputting wall clock data to output.json")
+    w.write("{}\n".format(json.dumps(data, indent=2, sort_keys=True)))
+
+print("\n{}".format(timemory.get_text(extended_set)))
+```
+
 ## Example Output
 
 ### Basic Example
