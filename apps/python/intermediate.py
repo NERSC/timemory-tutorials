@@ -1,4 +1,4 @@
-#!/global/project/projectdirs/m1759/timemory-tutorial/spack/opt/spack/cray-cnl7-skylake_avx512/gcc-7.3.0/python-3.7.7-2al4c7otz3ozjcengqvynx2jzxzcrisf/bin/python
+#!/usr/bin/env python
 
 import sys
 import json
