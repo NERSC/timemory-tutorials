@@ -1,6 +1,6 @@
 #!/bin/bash 
 
-FILES=$(find . -type f | egrep -v '\.sh$|README.md')
+FILES=$(find . -type f | egrep -v '\.sh$|\.py$|README.md')
 FOLDERS=$(find . -type d | egrep '^(./timemory)')
 
 echo -e "Remove these files/folders?\n\n${FILES}\n${FOLDERS}\n"
