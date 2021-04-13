@@ -192,36 +192,6 @@ print(help(tracer_config))
 tracer_config.only_filenames = [__file__]
 ```
 
-#### Decorator
-
-```python
-from timemory.profiler import profile
-
-@profile(["wall_clock", "peak_rss"], flat=False, timeline=False)
-def profile_decorator(nfib=3):
-    return fibonacci(nfib)
-```
-
-#### Context Manager
-
-```python
-def main():
-    with profile(["wall_clock", "peak_rss"], flat=False, timeline=False):
-        ans = fibonacci(nfib=3)
-```
-
-#### Object
-
-```python
-def main():
-    timemory.settings.flat_profile = False
-    timemory.settings.timeline_profile = False
-    prof = profile(["wall_clock", "peak_rss"])
-    prof.start()
-    profile_object(nfib=3)
-    return
-```
-
 ## Example Outputs
 
 ### Profiler via Decorator
