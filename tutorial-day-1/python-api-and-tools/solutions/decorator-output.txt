@@ -1,0 +1,33 @@
+stephey@cori06:/global/cscratch1/sd/stephey/timemory-tutorials/tutorial-day-1/python-api-and-tools/solutions> python example-trace-decorators.py 
+Running fibonacci...
+Running inefficient...
+Answer = 509443184046766.0
+[wall]|0> Outputting 'timemory-example-trace-decorators-output/wall.flamegraph.json'...
+[wall]|0> Outputting 'timemory-example-trace-decorators-output/wall.json'...
+[wall]|0> Outputting 'timemory-example-trace-decorators-output/wall.tree.json'...
+[wall]|0> Outputting 'timemory-example-trace-decorators-output/wall.txt'...
+
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|                                                                                    REAL-CLOCK TIMER (I.E. WALL-CLOCK TIMER)                                                                                    |
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|                                                        LABEL                                                         | COUNT  | DEPTH  | METRIC | UNITS  |  SUM   | MEAN   |  MIN   |  MAX   | STDDEV | % SELF |
+|----------------------------------------------------------------------------------------------------------------------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
+| >>> @trace(["wall_clock"])                                                      [fib/example-trace-decorators.py:05] |        |      0 |        |        |        |        |        |        |        |        |
+| >>> def fib(n):                                                                 [fib/example-trace-decorators.py:06] |        |      0 |        |        |        |        |        |        |        |        |
+| >>>     return n if n < 2 else (fib(n - 1) + fib(n - 2))                        [fib/example-trace-decorators.py:07] |  21892 |      0 | wall   | sec    |  0.146 |  0.000 |  0.146 |  0.146 |  0.103 |  100.0 |
+| >>>                                                                             [fib/example-trace-decorators.py:04] |  10947 |      0 | wall   | sec    |  0.417 |  0.000 |  0.417 |  0.417 |  0.295 |  100.0 |
+| >>> @trace(["wall_clock"])                                              [inefficient/example-trace-decorators.py:09] |        |      0 |        |        |        |        |        |        |        |        |
+| >>> def inefficient(n):                                                 [inefficient/example-trace-decorators.py:10] |        |      0 |        |        |        |        |        |        |        |        |
+| >>>     a = 0                                                           [inefficient/example-trace-decorators.py:11] |      1 |      0 | wall   | sec    |  0.000 |  0.000 |  0.000 |  0.000 |  0.000 |  100.0 |
+| >>>     for i in range(n):                                              [inefficient/example-trace-decorators.py:12] |     21 |      0 | wall   | sec    |  0.000 |  0.000 |  0.000 |  0.000 |  0.000 |  100.0 |
+| >>>         a += i                                                      [inefficient/example-trace-decorators.py:13] |     20 |      0 | wall   | sec    |  0.000 |  0.000 |  0.000 |  0.000 |  0.000 |  100.0 |
+| >>>         for j in range(n):                                          [inefficient/example-trace-decorators.py:14] |    420 |      0 | wall   | sec    |  0.002 |  0.000 |  0.002 |  0.002 |  0.000 |  100.0 |
+| >>>             a += j                                                  [inefficient/example-trace-decorators.py:15] |    400 |      0 | wall   | sec    |  0.002 |  0.000 |  0.002 |  0.002 |  0.000 |  100.0 |
+| >>>     arr = np.arange(a * n * n * n, dtype=np.double)                 [inefficient/example-trace-decorators.py:16] |      1 |      0 | wall   | sec    |  0.154 |  0.154 |  0.154 |  0.154 |  0.000 |  100.0 |
+| >>>     return arr.sum()                                                [inefficient/example-trace-decorators.py:17] |      1 |      0 | wall   | sec    |  0.000 |  0.000 |  0.000 |  0.000 |  0.000 |  100.0 |
+| >>>                                                                     [inefficient/example-trace-decorators.py:08] |      1 |      0 | wall   | sec    |  0.191 |  0.191 |  0.191 |  0.191 |  0.000 |  100.0 |
+| >>> def _sum(a, axis=None, dtype=None, out=None, keepdims=False,                              [_sum/_methods.py:036] |      1 |      0 | wall   | sec    |  0.026 |  0.026 |  0.026 |  0.026 |  0.000 |  100.0 |
+| >>>          initial=_NoValue, where=True):                                                   [_sum/_methods.py:037] |        |      0 |        |        |        |        |        |        |        |        |
+| >>>     return umr_sum(a, axis, dtype, out, keepdims, initial, where)                         [_sum/_methods.py:038] |      1 |      0 | wall   | sec    |  0.026 |  0.026 |  0.026 |  0.026 |  0.000 |  100.0 |
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+
