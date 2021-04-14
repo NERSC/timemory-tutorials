@@ -21,7 +21,7 @@ and tracing is also possible.
 Let's load the NERSC python and timemory modules and make sure our example.py runs:
 
 ```
-module load python/3.7-anaconda-2019.10 timemory
+module load python timemory
 ```
 
 ```
