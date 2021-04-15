@@ -2,12 +2,12 @@
 
 Here you'll find
 
-`example.py`, a sample script we'll use for our exercises.
+[example.py](example.py), a sample script we'll use for our exercises.
 
-`overview.md`, the document that will outline some of the Python capabilities in timemory.
+[overview.md](overview.md), the document that will outline some of the Python capabilities in timemory.
 
-The `solutions` directory which contains the answers to exercises we discuss in
-`overview.md`. Don't look until you've tried!
+The [solutions](solutions) directory which contains the answers to exercises we discuss in
+[overview.md](overview.md). Don't look until you've tried!
 
 
 ## We'll show/run these examples on NERSC Cori
@@ -38,11 +38,11 @@ stephey@cori06:~> python -c "import timemory"
 stephey@cori06:~> 
 ```
 
-We'll demonstate some capabilities and provide some exercises in `overview.md`.
-Solutions to the exercises can be found in `solutions.md`.
+We'll demonstate some capabilities and provide some exercises in [overview.md](overview.md).
+Solutions to the exercises can be found in [solutions](solutions).
 
 ## More information
 
 For more information than we could cover in our relatively short tutorial,
-please see the `extended` directory in this folder. Here you'll find a lot more
+please see the [extended](extended) directory in this folder. Here you'll find a lot more
 details and examples.
