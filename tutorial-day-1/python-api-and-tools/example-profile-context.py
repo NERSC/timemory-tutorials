@@ -4,12 +4,12 @@ from timemory.profiler import profile
 
 
 def fib(n):
-    with profile(["wall_clock"], key=f"fib({n})"):
+    with profile(["wall_clock"]):
         return n if n < 2 else (fib(n - 1) + fib(n - 2))
 
 
 def inefficient(n):
-    with profile(["wall_clock"], key=f"inefficient({n})"):
+    with profile(["wall_clock"]):
         a = 0
         for i in range(n):
             a += i
