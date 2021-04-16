@@ -5,7 +5,7 @@ Here we'll outline and demo the python profiling and tracing capabilities of tim
 ## Profiling
 
 First we'll talk about profiling. Let's first take a look at our example.py.
-Note that right now there is no instrumentation-- it looks like a normal python
+Note that right now there is no instrumentation -- it looks like a normal python
 script. 
 
 ### Profiling via the command line
@@ -16,7 +16,7 @@ Now let's try profiling via the command line:
 python -m timemory.profiler -d timemory-profile-output -- ./example.py
 ```
 
-where `-d` tells timemory where to put the output files and `example.py` is the script we'd like to profile.
+where `-d` tells timemory where to put the output files and [example.py](example.py) is the script we'd like to profile.
 
 Let's take a look at our output:
 
@@ -71,7 +71,7 @@ This will generate profiling data stored in several files in the `timemory-profi
 
 Now let's try profiling by using decorators in our script instead.
 
-You can take a look at `example-profile-decorators.py` which already has
+You can take a look at [example-profile-decorators.py](example-profile-decorators.py) which already has
 `@profile(["wall_clock"])` decorators added to the `fib` and `inefficient`
 functions. Note that we also had to import `from timemory.profiler import
 profile` at the top of our script. Now let's profile using our decorators.
@@ -127,10 +127,10 @@ Answer = 509443184046766.0
 ### Profiling using context managers
 
 Now let's try profiling using context managers rather than decorators. You can
-take a look at `example-profile-context.py`. We still have the same import at
+take a look at [example-profile-context.py](example-profile-context.py). We still have the same import at
 the top of our script: `from timemory.profiler import profile`. We have added
 context mangers to our `fib` and `inefficient`, for example: `with
-profile(["wall_clock"], key=f"fib({n})")` for the `fib` function.
+profile(["wall_clock"])` for the `fib` function.
 
 Now let's run our program:
 
@@ -188,5 +188,5 @@ Exercise 2: Tracing with a decorator
 
 Exercise 3: Tracing with a context manager
 
-You can find the solutions in the `solutions` folder, but we encourage you to try them first!
+You can find the solutions in the [solutions](solutions) folder, but we encourage you to try them first!
 
