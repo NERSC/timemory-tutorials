@@ -43,34 +43,44 @@ main(int argc, char** argv)
     timemory_init_library(argc, argv);
 // set default components
     timemory_set_default("wall_clock, cpu_clock");
-// begin recording components for main    
-    uint64_t id0 = timemory_get_begin_record("main/total");
+// begin recording components for main region    
+    timemory_push_region("main/total"); 
 
-    uint64_t id3 = timemory_get_begin_record("fib");
+// begin recording for fib 
+    timemory_push_region("fib");
     long     ans = fib(nfib);
-    timemory_end_record(id3);	
+// end recording for fib
+    timemory_pop_region("fib");
+    
+//begin collection for loops total
+   timemory_push_region("total_loops");
 
-    uint64_t id4 = timemory_get_begin_record("total_loops");
-
-    uint64_t id1 = timemory_get_begin_record("loop_1");
+// begin collection for first loop
+    timemory_push_region("loop_1_region");
     for(int i = 0; i < nitr*2; ++i)
     {
         ans += fib(nfib + 1);
     }
-    timemory_end_record(id1);
+// end collection for first loop
+    timemory_pop_region("loop_1_region");
 
-    uint64_t id2 = timemory_get_begin_record("loop_2");
+// begin collection for second loop
+    timemory_push_region("loop_2_region");
     for(int i = 0; i < nitr; ++i)
     {
-        ans += fib(nfib + 1);
+       	ans += fib(nfib + 1);
     }
-    timemory_end_record(id2);
+// end collection for second loop
+    timemory_pop_region("loop_2_region");
 
-    timemory_end_record(id4);
-// end recording for main
-    timemory_end_record(id0);
+// end collection for loops total
+    timemory_pop_region("total_loops");
+
+// end recording for main region
+    timemory_pop_region("main/total");
 
     std::cout<<"Answer = "<< ans<<"\n";
+
 // finalize timemory library
     timemory_finalize_library();
     return EXIT_SUCCESS;
