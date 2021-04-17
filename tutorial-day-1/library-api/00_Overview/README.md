@@ -47,4 +47,19 @@ target_link_libraries(library_example ${TIMEMORY_CXX_LIBRARY})
 ## Environmental Controls
 The vast majority of the environment variables can be viewed using the `timemory-avail` executable with the `-S/--settings` option. Additionally, the `<OUTPUT_PATH>/metadata.json` file will record all the environment variables during the simulation. In particular, some dynamically generated environment variables for components and variadic bundlers appear in the `metadata.json` file and not in the `timemory-avail` output.
 
-For example, timemory instrumentation can be turned on or off by setting the below variabe to appropriate value.
+For example, timemory instrumentation can be turned on or off by setting the below variabe to `true` or `false` respectively.
+```
+TIMEMORY_ENABLED 
+```
+## Building the example code
+The example code provided with this section does not perform any instrumentation but demonstrates building with Timemory and initializing and finalizing the timemory library. To build the sample code move to the directory where the `CMakeLists` file and the `example.cpp` file is located and the follow the below steps:
+```
+mkdir build
+cd build
+cmake ../
+make
+```
+After the has been built, you can do a test run using:
+```
+./library_example 40
+```
