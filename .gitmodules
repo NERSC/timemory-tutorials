@@ -4,3 +4,4 @@
 [submodule "apps/kokkos"]
 	path = apps/kokkos
 	url = https://github.com/NERSC/kokkos.git
+	branch = develop
