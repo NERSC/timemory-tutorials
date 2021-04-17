@@ -18,7 +18,9 @@ else()
     target_compile_definitions(lulesh-mpi INTERFACE USE_MPI=0)
 endif()
 
-find_package(Kokkos REQUIRED)
+if(NOT TARGET Kokkos::kokkos)
+    find_package(Kokkos REQUIRED)
+endif()
 
 file(GLOB headers ${PROJECT_SOURCE_DIR}/*.h ${PROJECT_SOURCE_DIR}/*.hxx)
 file(GLOB sources ${PROJECT_SOURCE_DIR}/*.cc)

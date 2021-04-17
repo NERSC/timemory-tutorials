@@ -50,3 +50,13 @@ CMakeFiles
 
 # timemory output
 timemory-*-output
+/apps/build.sh-apps
+
+/bin/*
+/lib/*
+/include/*
+
+# except .gitignore
+!/bin/.gitignore
+!/lib/.gitignore
+!/include/.gitignore

@@ -1,17 +1,14 @@
 #!/bin/bash -e
 
-# directory containing this file
-THIS_DIR=$(dirname ${BASH_SOURCE[0]})
-
-# add it to modulepath
-export MODULEPATH=${MODULEPATH}:${THIS_DIR}/modulefiles
+# repository root folder
+REPO_DIR=$(dirname $(bash -c "cd $(dirname ${BASH_SOURCE[0]}) && pwd"))
 
 # add apps bin install to path
-export PATH=${THIS_DIR}/bin:${PATH}
+export PATH=${REPO_DIR}/bin:${PATH}
 
 # add apps lib install to library path
 if [ "$(uname)" = "Darwin" ]; then
-    export DYLD_LIBRARY_PATH=${THIS_DIR}/lib:${DYLD_LIBRARY_PATH}
+    export DYLD_LIBRARY_PATH=${REPO_DIR}/lib:${DYLD_LIBRARY_PATH}
 else
-    export LD_LIBRARY_PATH=${THIS_DIR}/lib:${LD_LIBRARY_PATH}
+    export LD_LIBRARY_PATH=${REPO_DIR}/lib:${LD_LIBRARY_PATH}
 fi

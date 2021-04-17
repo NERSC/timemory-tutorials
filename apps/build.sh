@@ -21,15 +21,7 @@ if [ "${1}" = "clean" ]; then
     exit 0
 fi
 
-# create build directory
-run-verbose mkdir -p ${BINARY_DIR}
-run-verbose cd ${BINARY_DIR}
-
-# remove any previous installs
-# rm -rf $(find ../../bin | grep -v gitignore)
-# rm -rf $(find ../../lib | grep -v gitignore)
-
-# install to root folder
-run-verbose cmake -DCMAKE_INSTALL_PREFIX=${TARGET_DIR} $@ ${SOURCE_DIR}
-run-verbose cmake --build ${BINARY_DIR} --target all -- -j8
-run-verbose cmake --build ${BINARY_DIR} --target install -- -j8
+git submodule update --init ${SOURCE_DIR}
+run-verbose cmake -B ${BINARY_DIR} -DCMAKE_INSTALL_PREFIX=${TARGET_DIR} $@ ${SOURCE_DIR}
+run-verbose cmake --build ${BINARY_DIR} --target all --parallel 8
+run-verbose cmake --build ${BINARY_DIR} --target install --parallel 8

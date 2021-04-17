@@ -1,3 +1,6 @@
 [submodule "apps/tomopy/tomopy-source"]
 	path = apps/tomopy/tomopy-source
 	url = https://github.com/tomopy/tomopy.git
+[submodule "apps/kokkos"]
+	path = apps/kokkos
+	url = https://github.com/NERSC/kokkos.git

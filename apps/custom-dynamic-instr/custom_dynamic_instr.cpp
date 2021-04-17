@@ -25,6 +25,7 @@
 
 #include "timemory/library.h"
 #include "timemory/timemory.hpp"
+#include "timemory/components/papi/components.hpp"
 
 using namespace tim::component;
 //
@@ -52,7 +53,7 @@ struct inst_per_cycle : public base<inst_per_cycle, std::array<long long, 2>>
     {
         return "number of instructions per cycle";
     }
-    static void thread_init(storage_type*) { hw_t::thread_init(nullptr); }
+    static void thread_init() { hw_t::thread_init(); }
 
     void start()
     {
@@ -64,7 +65,7 @@ struct inst_per_cycle : public base<inst_per_cycle, std::array<long long, 2>>
         m_hw.stop();
         value = m_hw.get_value();
 	accum = m_hw.get_accum();
-    }    
+    }
     double get() const
     {
         return (accum[1] > 0.0) ? (accum[0] / (1.0 * accum[1])) : 0.0;
