@@ -41,49 +41,13 @@ main(int argc, char** argv)
     int  nitr = (argc > 2) ? atoi(argv[2]) : 2;
 // initialize timemory library
     timemory_init_library(argc, argv);
-// set default components
-    timemory_set_default("wall_clock, cpu_clock");
-// begin recording components for main region    
-    timemory_push_region("main/total"); 
-// begin recording for fib
-    timemory_push_region("fib");
     long     ans = fib(nfib);
-// end recording for fib
-    timemory_pop_region("fib");
-
-// replace the default components with cpu_util component for region "total_loops" and region "loop_1_region"
-   timemory_push_components("cpu_util, current_peak_rss");
-//begin collection for loops total
-   timemory_push_region("total_loops");
-// begin collection for first loop
-    timemory_push_region("loop_1_region");
-    for(int i = 0; i < nitr*2; ++i)
+    for(int i = 0; i < nitr; ++i)
     {
         ans += fib(nfib + 1);
     }
-// end collection for first loop
-    timemory_pop_region("loop_1_region");
-
-// restore the default components for rest of the code
-    timemory_pop_components();
-
-// begin collection for second loop
-    timemory_push_region("loop_2_region");
-    for(int i = 0; i < nitr; ++i)
-    {
-       	ans += fib(nfib + 1);
-    }
-// end collection for second loop
-    timemory_pop_region("loop_2_region");
-
-// end collection for loops total
-    timemory_pop_region("total_loops");
-
-// end recording for main region
-    timemory_pop_region("main/total");
 
     std::cout<<"Answer = "<< ans<<"\n";
-
 // finalize timemory library
     timemory_finalize_library();
     return EXIT_SUCCESS;

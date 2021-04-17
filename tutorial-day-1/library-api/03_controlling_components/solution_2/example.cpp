@@ -51,10 +51,11 @@ main(int argc, char** argv)
 // end recording for fib
     timemory_pop_region("fib");
 
-// replace the default components with cpu_util component for region "total_loops" and region "loop_1_region"
-   timemory_push_components("cpu_util, current_peak_rss");
-//begin collection for loops total
-   timemory_push_region("total_loops");
+// add new components to the default list of components
+    timemory_add_components("current_peak_rss, cpu_util");
+
+// begin collection for loops total
+    timemory_push_region("total_loops");
 // begin collection for first loop
     timemory_push_region("loop_1_region");
     for(int i = 0; i < nitr*2; ++i)
@@ -64,8 +65,8 @@ main(int argc, char** argv)
 // end collection for first loop
     timemory_pop_region("loop_1_region");
 
-// restore the default components for rest of the code
-    timemory_pop_components();
+// remove components from default set of components
+    timemory_remove_components("current_peak_rss, cpu_util");
 
 // begin collection for second loop
     timemory_push_region("loop_2_region");
