@@ -2,10 +2,10 @@
 
 ## Overview
 
-| Date             | Topics                                                         |
-| ---------------- | -------------------------------------------------------------- |
-| April 19th, 2021 | Command-line tools, library API, Python API, Python tools, Viz |
-| April 26th, 2021 | Python toolkit, C++ template API                               |
+| Date             | Topics                                                                   |
+| ---------------- | ------------------------------------------------------------------------ |
+| April 19th, 2021 | Command-line tools, library API, Python API, Python tools, Visualization |
+| April 26th, 2021 | Python toolkit, C++ template API                                         |
 
 This repository is intended to provide walk-through tutorials for using timemory ([Github](https://github.com/NERSC/timemory)) ([Documentation](https://timemory.readthedocs.io)) for software monitoring (performance analysis, debugging, logging).
 The pre-built tools and libraries primarily focus on performance analysis.
