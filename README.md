@@ -1,15 +1,12 @@
-# timemory-tutorials
+# Timemory ECP 2021 Tutorial
 
-## ECP 2021 Tutorial
+## Overview
 
-### Overview
-
-|       | Date             | Topics                                                                              |
-| ----- | ---------------- | ----------------------------------------------------------------------------------- |
-| Day 1 | April 19th, 2021 | Command-line tools, library API, compiler instrumentation, Python API, Python tools |
-| Day 2 | April 26th, 2021 | Python toolkit, C++ template API                                                    |
-
-> Day 2: April 26th, 2021
+|       | Date             | Topics                                                     |
+| ----- | ---------------- | ---------------------------------------------------------- |
+| Day 1 | April 19th, 2021 | Command-line tools, library API, compiler instrumentation, |
+|       |                  | Python API, Python tools, Visualization                    |
+| Day 2 | April 26th, 2021 | Python toolkit, C++ template API                           |
 
 This repository is intended to provide walk-through tutorials for using timemory ([Github](https://github.com/NERSC/timemory)) ([Documentation](https://timemory.readthedocs.io)) for software monitoring (performance analysis, debugging, logging).
 The pre-built tools and libraries primarily focus on performance analysis.
@@ -37,26 +34,26 @@ to build your own extensions, libraries, and tools.
 * (E) &#8594; Exercises
 * (D) &#8594; Demo
 
-### Resources
+## Resources
 
-#### Docker Container
+### Docker Container
 
 ```console
 docker pull nersc/timemory:ecp-2021
 docker run -it --rm ...
 ```
 
-#### NERSC Training Account
+### NERSC Training Account
 
 Instructions for creating training account
 
-#### Local Installation Instructions
+### Local Installation Instructions
 
 ```console
 ./install.sh
 ```
 
-### Applications
+## Applications
 
 The [apps](apps) folder contains various C and C++ applications for use in the tutorials.
 See instructions in [apps/README.md](apps/README.md) in order to build these applications.
@@ -68,6 +65,6 @@ to add the installed folders to the `PATH` and `LD_LIBRARY_PATH` environment var
 source scripts/setup-env.sh
 ```
 
-### NERSC Cori Modules
+## NERSC Cori Modules
 
 See instructions in [modules.md](modules.md).
