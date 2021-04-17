@@ -63,3 +63,7 @@ After the has been built, you can do a test run using:
 ```
 ./library_example 40
 ```
+## Timemory Library API documentations
+To have a list of all available options with Timemory Library API you can aslo refer to: https://timemory.readthedocs.io/en/develop/api/library.html
+
+We will cover most of the use-cases in following sections.
