@@ -4,7 +4,10 @@
 
 ### Overview
 
-> Day 1: April 19th, 2021
+|       | Date             | Topics                                                                              |
+| ----- | ---------------- | ----------------------------------------------------------------------------------- |
+| Day 1 | April 19th, 2021 | Command-line tools, library API, compiler instrumentation, Python API, Python tools |
+| Day 2 | April 26th, 2021 | Python toolkit, C++ template API                                                    |
 
 > Day 2: April 26th, 2021
 
