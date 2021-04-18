@@ -51,8 +51,8 @@ main(int argc, char** argv)
     MPI_Init(&argc, &argv);
 #endif
 
-    timemory_set_default("wall_clock, peak_rss");
     timemory_init_library(argc, argv);
+    timemory_set_default("wall_clock, peak_rss");
     timemory_push_region(argv[0]);
 
     puts("Entering Generation region...");
