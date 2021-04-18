@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
-project(04_compiler_instrumentation LANGUAGES CXX)
+project(05_compiler_instrumentation LANGUAGES CXX)
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 if("${CMAKE_BUILD_TYPE}" STREQUAL "")

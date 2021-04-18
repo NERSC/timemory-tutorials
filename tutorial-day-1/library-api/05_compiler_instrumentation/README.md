@@ -1,4 +1,4 @@
-# 04_Compiler Instrumentation
+# 05_Compiler Instrumentation
 
 Timemory offers an option of compiler instrumentation without modifying your application code. This example demonstrates the usage of timemory compiler instrumentation
 ([documentation](https://timemory.readthedocs.io/en/develop/tools/timemory-compiler-instrument/README.html)).

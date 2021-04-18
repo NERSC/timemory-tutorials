@@ -2,10 +2,7 @@ cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
 project(timemory-library-example LANGUAGES CXX)
 
-find_package(timemory REQUIRED
-    COMPONENTS headers compile-options analysis-tools
-    OPTIONAL_COMPONENTS cxx)
-#
+find_package(timemory REQUIRED COMPONENTS headers compile-options OPTIONAL_COMPONENTS cxx)
 
 function(GET_LIBRARY _VAR _LANG)
 	string(TOLOWER ${_LANG} _LOW)

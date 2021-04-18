@@ -21,12 +21,35 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-
+#include "timemory/components/timing/wall_clock.hpp"
+#include "timemory/operations/definition.hpp"
+#include "timemory/storage/definition.hpp"
+#include "timemory/variadic/definition.hpp"
 #include "timemory/library.h"
 #include <cstdint>
 #include <cstdio>
 #include <cstdlib>
 #include <string>
+using namespace tim::component;
+using toolset_t     = tim::auto_tuple_t<wall_clock>;
+using toolset_ptr_t = std::shared_ptr<toolset_t>;
+using record_map_t  = std::unordered_map<uint64_t, toolset_ptr_t>;
+
+void
+create_record(const char* name, uint64_t* id, int, int*)
+{
+    auto& _records = timemory_tl_static<record_map_t>();
+    *id            = timemory_get_unique_id();
+    _records.insert(std::make_pair(*id, std::make_shared<toolset_t>(name)));
+}
+
+void
+delete_record(uint64_t nid)
+{
+    auto& _records = timemory_tl_static<record_map_t>();
+    // erase key from map which stops recording when object is destroyed
+    _records.erase(nid);
+}
 
 long
 fib(long n)
@@ -37,52 +60,22 @@ fib(long n)
 int
 main(int argc, char** argv)
 {
-    long nfib = (argc > 1) ? atol(argv[1]) : 43;
-    int  nitr = (argc > 2) ? atoi(argv[2]) : 2;
-// initialize timemory library
+ long nfib = (argc > 1) ? atol(argv[1]) : 43;
+
+    timemory_create_function = (timemory_create_func_t) &create_record;
+    timemory_delete_function = (timemory_delete_func_t) &delete_record;
     timemory_init_library(argc, argv);
-// set default components
-    timemory_set_default("wall_clock, cpu_clock");
-// begin recording components for main region    
-    timemory_push_region("main/total"); 
-// begin recording for fib
-    timemory_push_region("fib");
+
+    uint64_t id0 = timemory_get_begin_record("main/total");
     long     ans = fib(nfib);
-// end recording for fib
-    timemory_pop_region("fib");
-    
-    timemory_add_components("cpu_util");
-  timemory_remove_components("cpu_util");  
-//begin collection for loops total
-   timemory_push_region("total_loops");
-// begin collection for first loop
-    timemory_push_region("loop_1_region");
-    for(int i = 0; i < nitr*2; ++i)
-    {
-        ans += fib(nfib + 1);
-    }
-// end collection for first loop
-    timemory_pop_region("loop_1_region");
 
+    uint64_t id1 = timemory_get_begin_record("nfib+1");
+    ans += fib(nfib + 1);
 
-// begin collection for second loop
-    timemory_push_region("loop_2_region");
-    for(int i = 0; i < nitr; ++i)
-    {
-       	ans += fib(nfib + 1);
-    }
-// end collection for second loop
-    timemory_pop_region("loop_2_region");
+    timemory_end_record(id1);
+    timemory_end_record(id0);
 
-// end collection for loops total
-    timemory_pop_region("total_loops");
-
-// end recording for main region
-    timemory_pop_region("main/total");
-
-    std::cout<<"Answer = "<< ans<<"\n";
-
-// finalize timemory library
+    printf("Answer = %li\n", ans);
     timemory_finalize_library();
     return EXIT_SUCCESS;
 }
