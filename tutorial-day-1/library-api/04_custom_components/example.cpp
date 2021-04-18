@@ -21,15 +21,18 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+
 #include "timemory/components/timing/wall_clock.hpp"
 #include "timemory/library.h"
 #include "timemory/operations/definition.hpp"
 #include "timemory/storage/definition.hpp"
 #include "timemory/variadic/definition.hpp"
+
 #include <cstdint>
 #include <cstdio>
 #include <cstdlib>
 #include <string>
+
 using namespace tim::component;
 using toolset_t     = tim::auto_tuple_t<wall_clock>;
 using toolset_ptr_t = std::shared_ptr<toolset_t>;
