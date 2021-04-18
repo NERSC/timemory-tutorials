@@ -1,6 +1,6 @@
 # Tutorial Resources
 
-If you already an active NERSC account, add your username in the `#m3502` channel in the
+If you have an active NERSC account, add your username in the `#m3502` channel in the
 [timemory slack](https://timemory.slack.com/)
 (if you haven't joined, [signup here](https://join.slack.com/t/timemory/signup)).
 If you do not want to join the slack channel,
