@@ -1,4 +1,4 @@
-## 04_custom_components
+# Custom Components
 
 Timemory offers flexibility of adding your custom built list of components to the stack and each call to `timemory_get_begin_record()` leads to all those components being collected. To achieve this timemory provides pointer to functions that are called inside `timemory_get_being_record()` and `timemory_end_record()`:
 
@@ -31,17 +31,15 @@ int main(){
 }
 ```
 
-In the above example `timemory_create_function` and `timemory_delete_function` are over written by our custom create and delete functions. You can note that in the above example we just have `wall_clock` component in our list but you can modify this to include any number of components. You can find the complete example in `example.cpp`.
+In the above example `timemory_create_function` and `timemory_delete_function` are over written by our custom create and delete functions. You can note that in the above example we just have `wall_clock` component in our list but you can modify this to include any number of components. You can find the complete example in [example.cpp](example.cpp).
 
 You can build and run this using:
 
 ```console
-mkdir build
+cmake -B build .
+cmake --build build --target all
 cd build
-cmake ../
-make
-
-library_example 40
+./library_example 40
 ```
 
 Expected output would look like this:
@@ -63,4 +61,3 @@ Answer = 267914296
 | >>> |_nfib+1   |      1 |      1 | wall   | sec    |  1.059 |  1.059 |  1.059 |  1.059 |  0.000 |  100.0 |
 |----------------------------------------------------------------------------------------------------------|
 ```
-

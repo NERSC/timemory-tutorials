@@ -1,10 +1,13 @@
-# 01_basic_component_recording
-In this subsection we will instrument the `example.cpp` code from the last the section. The idea is to collect a set of metrics for different regions in the code. Timemory allows to collect a vast set of performance metrics including any use defined set of components. In order to set the type of performance metrics that are to be collected Timemory uses components. Complete list of components currently available with Timemory can be found here: https://timemory.readthedocs.io/en/develop/components.html#timing-components
+# Basic Component Recording
+
+In this subsection we will instrument the [example.cpp](example.cpp) code from the last the section. The idea is to collect a set of metrics for different regions in the code. Timemory allows to collect a vast set of performance metrics including any use defined set of components. In order to set the type of performance metrics that are to be collected Timemory uses components. Complete list of components currently available with Timemory can be found here: [timemory.readthedocs.io/en/develop/components.html#timing-components](https://timemory.readthedocs.io/en/develop/components.html#timing-components).
 
 In this example we intend on collecting the `CPU time` and the `Wall clock time` for different regions of the code. To configure timemory to do that we add the below lines in our code:
+
 ```cpp
 timemory_set_default("wall_clock, cpu_clock");
 ```
+
 This sets the default components, in next sections we will have a look at how to change the components for different regions of the code. To begin collecting the metrics associated with the components for a certain region use the below syntax:
 
 ```cpp
@@ -16,9 +19,9 @@ int main(int argc, char** argv)
 // set default components
     timemory_set_default("wall_clock, cpu_clock");
 
-// begin recording components for main    
+// begin recording components for main
     uint64_t id0 = timemory_get_begin_record("main/total");
-    
+
     //... code to be profiled ...
 
 // end recording for main
@@ -30,16 +33,14 @@ int main(int argc, char** argv)
 }
 
 ```
-In the above code `timemory_get_begin_record("main/total")` begins collecting the metrics and `timemory_end_record()` stops the colleciton of these metrics. For easy analysis each region can be named with a string so that it can be later identified in the timemory output. `example.cpp` contains a more complete example of profiling different regions of the code for default components. To build and run the example follow the steps below:
+
+In the above code `timemory_get_begin_record("main/total")` begins collecting the metrics and `timemory_end_record()` stops the colleciton of these metrics. For easy analysis each region can be named with a string so that it can be later identified in the timemory output. [example.cpp](example.cpp) contains a more complete example of profiling different regions of the code for default components. To build and run the example follow the steps below:
 
 ```console
-mkdir build
+cmake -B build .
+cmake --build build --target all
 cd build
-cmake ../
-make
-
 export TIMEMORY_ENABLED=true
-
 ./library_example 30
 ```
 

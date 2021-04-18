@@ -1,4 +1,4 @@
-# 05_Compiler Instrumentation
+# Compiler Instrumentation
 
 Timemory offers an option of compiler instrumentation without modifying your application code. This example demonstrates the usage of timemory compiler instrumentation
 ([documentation](https://timemory.readthedocs.io/en/develop/tools/timemory-compiler-instrument/README.html)).
@@ -7,7 +7,7 @@ To take advantage of compiler instrumentation you will only need to rebuild your
 
 ## Starting Code
 
-`example.cpp` will be used to build the `compiler_instrumentation` executable. This
+[example.cpp](example.cpp) will be used to build the `compiler_instrumentation` executable. This
 mini-app takes a value ("nfib") value, computes the fibonacci of this value ("nwait"),
 and then consumes "nwait" milliseconds of CPU time +/- some randomness. Each iteration
 is executed in parallel on a separate thread. In the compiler instrumentation, you
@@ -79,7 +79,8 @@ main(int argc, char** argv)
 ## Exercise
 
 ### Build with Compiler Instrumentation
-modify the `CMakeLists.txt` so that the code in `example.cpp` can be rebuilt with timemory compiler instrumentation
+
+modify the `CMakeLists.txt` so that the code in [example.cpp](example.cpp) can be rebuilt with timemory compiler instrumentation
 
 ```cmake
 find_package(timemory REQUIRED COMPONENTS compiler-instrument)
@@ -88,6 +89,7 @@ find_package(timemory REQUIRED COMPONENTS compiler-instrument)
 
 target_link_libraries(compiler_instrumentation PRIVATE timemory::timemory-compiler-instrument)
 ```
+
 Compiler instrumentation settings can be controlled using environmental variables. For instance to turn compiler instrumentation on and for collecting `peak_rss` and `thread_cpu_clock` components use:
 
 ### 2. Modify Compiler Instrumentation Settings
@@ -96,16 +98,16 @@ Compiler instrumentation settings can be controlled using environmental variable
 export TIMEMORY_COMPILER_COMPONENTS="peak_rss, thread_cpu_clock"
 export TIMEMORY_COMPILER_ENABLE=true
 ```
+
 You can build and run the code using:
 
 ```console
-mkdir build 
+cmake -B build .
+cmake --build build --target all
 cd build
-cmake ../
-make
-
 ./compiler_instrumentation 12
 ```
+
 Expected output:
 
 ```console

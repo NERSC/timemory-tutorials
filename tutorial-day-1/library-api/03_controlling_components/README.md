@@ -1,6 +1,6 @@
-# 03_controlling_components
+# Controlling Components
 
-Timemory allows the flexibility of switching components that are being collected. This makes it possible to collect different metrics for different regions of the code. For instance from the `example.cpp` file, if we want to replace the default list of components that is set at the beginning with `CPU utilization` and `peak resident set size` then we can make use of the below calls:
+Timemory allows the flexibility of switching components that are being collected. This makes it possible to collect different metrics for different regions of the code. For instance from the [example.cpp](example.cpp) file, if we want to replace the default list of components that is set at the beginning with `CPU utilization` and `peak resident set size` then we can make use of the below calls:
 
 ```cpp
 // replaces the default component set with cpu_util and current_peak_rss
@@ -14,14 +14,12 @@ Timemory allows the flexibility of switching components that are being collected
 
 ## Exercise#1
 
-As an exercise modify the `example.cpp` in this directory so that for region `total_loops` and region `loop_1_region` only components `cpu_util` and `current_peak_rss` are collected. A solution for reference has been provided in the `solution` directory. To build and run both the `example.cpp` and the solution use below instructions:
+As an exercise modify the [example.cpp](example.cpp) in this directory so that for region `total_loops` and region `loop_1_region` only components `cpu_util` and `current_peak_rss` are collected. A solution for reference has been provided in the [solution](solution) directory. To build and run both the [example.cpp](example.cpp) and the solution use below instructions:
 
 ```console
-mkdir build
+cmake -B build .
+cmake --build build --target all
 cd build
-cmake ../
-make
-
 ./library_example 40
 ```
 
@@ -92,6 +90,7 @@ Answer = 1095815001
 You can observe that the regions `total_loops` and `loop_1_region` are only present in the tables for `CPU utilization` and `peak resident set size`.
 
 ## Exercise 2
+
 Timemory also offers an option to add and remove components from the default component set. This can be done using the below API calls:
 
 ```cpp
@@ -103,7 +102,8 @@ Timemory also offers an option to add and remove components from the default com
 // remove components from default set of components
     timemory_remove_components("current_peak_rss, cpu_util");
 ```
-Using the above two calls, as an exercise modify the `example.cpp` code so that for region `total_loops` and region `loop_1_region` in addition to the components set in the beginning two additional components of `current_peak_rs` and `cpu_util` are also collected. Build and run using the same instructions as above. Your expected output should look like this:
+
+Using the above two calls, as an exercise modify the [example.cpp](example.cpp) code so that for region `total_loops` and region `loop_1_region` in addition to the components set in the beginning two additional components of `current_peak_rs` and `cpu_util` are also collected. Build and run using the same instructions as above. Your expected output should look like this:
 
 ```console
 ./library_example 40
@@ -170,6 +170,5 @@ Answer = 1095815001
 | >>>   |_loop_2_region |      1 |      2 | wall   | sec    |  2.144 |  2.144 |  2.144 |  2.144 |  0.000 |  100.0 |
 |-----------------------------------------------------------------------------------------------------------------|
 ```
+
 You can observe that in addition to the default components being collected for the two regions of `total_loops` and `loop_1_region`, two additional components have also been collected. Solution for this exercise can be found in `solution_2` directory.
-
-

@@ -1,6 +1,7 @@
-# 02_marking_regions
+# Region Markers
 
 Timemory allows for easy labelling of regions of code with markers using `timemory_push_region()` and `timemory_pop_region()` calls. For instance:
+
 ```cpp
 int main(int argc, char** argv)
 {
@@ -10,9 +11,9 @@ int main(int argc, char** argv)
 // set default components
     timemory_set_default("wall_clock, cpu_clock");
 
-// begin recording for region main   
+// begin recording for region main
     timemory_push_region("main");
-    
+
     //... code in the region ...
 
 // end recording for main region
@@ -23,30 +24,32 @@ int main(int argc, char** argv)
     return EXIT_SUCCESS;
 }
 ```
+
 In the above example you can see that we have replaced the `timemory_get_begin_record` and `timemory_end_record()` with `timemory_push_region()` and `timemory_pop_region()` calls which allows for easy labelling of the regions.
 
 ## Exercise
-As an exercise you will need to modify the `example.cpp` code available in this directory such that it utilizes region markers. A solution is available in the `solution` folder.
+
+As an exercise you will need to modify the [example.cpp](example.cpp) code available in this directory such that it utilizes region markers. A solution is available in the [solution](solution) folder.
 
 ### Building and running
-To build the code in `example.cpp` use:
+
+To build the code in [example.cpp](example.cpp) use:
+
 ```console
-mkdir build
-cd build
-cmake ../
-make
-
-export TIMEMORY_ENABLED=true
-
-./library_example 40
+cmake -B build .
+cmake --build build --target all
 ```
+
 To run use:
 
 ```console
+cd build
+export TIMEMORY_ENABLED=true
 ./library_example 40
 ```
 
 Expected output:
+
 ```console
 ./library_example 40
 Answer = 1095815001
@@ -84,7 +87,7 @@ Answer = 1095815001
 | >>>   |_loop_2    |      1 |      2 | wall   | sec    |  1.983 |  1.983 |  1.983 |  1.983 |  0.000 |  100.0 |
 |-------------------------------------------------------------------------------------------------------------|
 ```
+
 After you have completed the changes for the exercise your output should still resemble to the one above (from unmodified example.cpp).
 
 Documentation are available [here](https://timemory.readthedocs.io/en/develop/api/library.html?highlight=timemory_push_regions#_CPPv420timemory_push_regionPKc).
-
