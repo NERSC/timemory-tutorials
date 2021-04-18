@@ -22,10 +22,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 #include "timemory/components/timing/wall_clock.hpp"
+#include "timemory/library.h"
 #include "timemory/operations/definition.hpp"
 #include "timemory/storage/definition.hpp"
 #include "timemory/variadic/definition.hpp"
-#include "timemory/library.h"
 #include <cstdint>
 #include <cstdio>
 #include <cstdlib>
@@ -60,7 +60,7 @@ fib(long n)
 int
 main(int argc, char** argv)
 {
- long nfib = (argc > 1) ? atol(argv[1]) : 43;
+    long nfib = (argc > 1) ? atol(argv[1]) : 43;
 
     timemory_create_function = (timemory_create_func_t) &create_record;
     timemory_delete_function = (timemory_delete_func_t) &delete_record;

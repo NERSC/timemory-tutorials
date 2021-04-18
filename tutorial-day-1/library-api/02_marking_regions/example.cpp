@@ -39,21 +39,21 @@ main(int argc, char** argv)
 {
     long nfib = (argc > 1) ? atol(argv[1]) : 43;
     int  nitr = (argc > 2) ? atoi(argv[2]) : 2;
-// initialize timemory library
+    // initialize timemory library
     timemory_init_library(argc, argv);
-// set default components
+    // set default components
     timemory_set_default("wall_clock, cpu_clock");
-// begin recording components for main    
+    // begin recording components for main
     uint64_t id0 = timemory_get_begin_record("main/total");
 
     uint64_t id3 = timemory_get_begin_record("fib");
     long     ans = fib(nfib);
-    timemory_end_record(id3);	
+    timemory_end_record(id3);
 
     uint64_t id4 = timemory_get_begin_record("total_loops");
 
     uint64_t id1 = timemory_get_begin_record("loop_1");
-    for(int i = 0; i < nitr*2; ++i)
+    for(int i = 0; i < nitr * 2; ++i)
     {
         ans += fib(nfib + 1);
     }
@@ -67,11 +67,11 @@ main(int argc, char** argv)
     timemory_end_record(id2);
 
     timemory_end_record(id4);
-// end recording for main
+    // end recording for main
     timemory_end_record(id0);
 
-    std::cout<<"Answer = "<< ans<<"\n";
-// finalize timemory library
+    std::cout << "Answer = " << ans << "\n";
+    // finalize timemory library
     timemory_finalize_library();
     return EXIT_SUCCESS;
 }

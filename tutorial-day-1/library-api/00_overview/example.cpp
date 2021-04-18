@@ -39,16 +39,16 @@ main(int argc, char** argv)
 {
     long nfib = (argc > 1) ? atol(argv[1]) : 43;
     int  nitr = (argc > 2) ? atoi(argv[2]) : 2;
-// initialize timemory library
+    // initialize timemory library
     timemory_init_library(argc, argv);
-    long     ans = fib(nfib);
+    long ans = fib(nfib);
     for(int i = 0; i < nitr; ++i)
     {
         ans += fib(nfib + 1);
     }
 
-    std::cout<<"Answer = "<< ans<<"\n";
-// finalize timemory library
+    std::cout << "Answer = " << ans << "\n";
+    // finalize timemory library
     timemory_finalize_library();
     return EXIT_SUCCESS;
 }
