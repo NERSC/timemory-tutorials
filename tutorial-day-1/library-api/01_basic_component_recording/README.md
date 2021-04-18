@@ -8,26 +8,26 @@ In this example we intend on collecting the `CPU time` and the `Wall clock time`
 timemory_set_default("wall_clock, cpu_clock");
 ```
 
-This sets the default components, in next sections we will have a look at how to change the components for different regions of the code. To begin collecting the metrics associated with the components for a certain region use the below syntax:
+This sets the default components, in the next sections we will have a look at how to change the components for different regions of the code. To begin collecting the metrics associated with the components for a certain region use the below syntax:
 
 ```cpp
 int main(int argc, char** argv)
 {
-// initialize timemory library
+    // initialize timemory library
     timemory_init_library(argc, argv);
 
-// set default components
+    // set default components
     timemory_set_default("wall_clock, cpu_clock");
 
-// begin recording components for main
+    // begin recording components for main
     uint64_t id0 = timemory_get_begin_record("main/total");
 
     //... code to be profiled ...
 
-// end recording for main
+    // end recording for main
     timemory_end_record(id0);
 
-// finalize timemory library
+    // finalize timemory library
     timemory_finalize_library();
     return EXIT_SUCCESS;
 }

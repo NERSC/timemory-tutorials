@@ -31,32 +31,20 @@ int main(int argc, char** argv)
 Simplest way of building with timemory is to use `cmake` to look up the required components. For Timemory library we find the required packages like:
 
 ```cmake
-find_package(timemory REQUIRED COMPONENTS headers compile-options OPTIONAL_COMPONENTS cxx)
+find_package(timemory REQUIRED COMPONENTS headers cxx)
 ```
 
-`headers` and `compile-options` include the required headers with standard compilation options for Timemory.
-
-To get the correct library we use the following snippet:
+the `headers` target provides the required headers, the `cxx` component finds the appropriate
+C++ library based on the value of `BUILD_SHARED_LIBS` in CMake.
+All the requested components are added to the `timemory::timemory` cmake target so
+to link to these components, simply add `timemory::timemory` to the `target_link_libraries(...)`:
 
 ```cmake
-function(GET_LIBRARY _VAR _LANG)
-        string(TOLOWER ${_LANG} _LOW)
-        set(_PREFIX timemory::timemory-${_LOW})
-        if(TARGET ${_PREFIX}-shared)
-                set(${_VAR} ${_PREFIX}-shared PARENT_SCOPE)
-        elseif(TARGET ${_PREFIX}-static)
-                set(${_VAR} ${_PREFIX}-static PARENT_SCOPE)
-        endif()
-endfunction()
-
-get_library(TIMEMORY_CXX_LIBRARY CXX)
+target_link_libraries(library_example timemory::timemory)
 ```
 
-and then link with the target (in the below example target is name `library_example`):
-
-```cmake
-target_link_libraries(library_example ${TIMEMORY_CXX_LIBRARY})
-```
+For more information on building against timemory, see the
+[documentation here](https://timemory.readthedocs.io/en/develop/getting_started/integrating.html#using-cmake).
 
 ## Environmental Controls
 
@@ -65,7 +53,7 @@ The vast majority of the environment variables can be viewed using the `timemory
 For example, timemory instrumentation can be turned on or off by setting the below variabe to `true` or `false` respectively.
 
 ```console
-TIMEMORY_ENABLED
+export TIMEMORY_ENABLED=true
 ```
 
 ## Building the example code
@@ -86,6 +74,7 @@ cd build
 
 ## Timemory Library API documentations
 
-To have a list of all available options with Timemory Library API you can aslo refer to: https://timemory.readthedocs.io/en/develop/api/library.html
+To have a list of all available options with Timemory Library API you can also refer to
+the doxygen [documentation here](https://timemory.readthedocs.io/en/develop/api/library.html).
 
 We will cover most of the use-cases in following sections.

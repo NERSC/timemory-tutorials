@@ -1,6 +1,8 @@
 # Custom Components
 
-Timemory offers flexibility of adding your custom built list of components to the stack and each call to `timemory_get_begin_record()` leads to all those components being collected. To achieve this timemory provides pointer to functions that are called inside `timemory_get_being_record()` and `timemory_end_record()`:
+Timemory offers the flexibility of replacing the entire stack of components being recorded
+or adding in your own custom components. This is achieved by replacing the `timemory_create_function`
+and `timemory_delete` function with function pointers that you provide. Each function in the library API which leads to components being collected (e.g. `timemory_get_begin_record()`, `timemory_push_region()`, etc.) uses these function to start/stop the components.
 
 ```cpp
 using toolset_t     = tim::auto_tuple_t<wall_clock>;
@@ -23,11 +25,11 @@ delete_record(uint64_t nid)
     _records.erase(nid);
 }
 
-int main(){
-
+int main()
+{
     timemory_create_function = (timemory_create_func_t) &create_record;
     timemory_delete_function = (timemory_delete_func_t) &delete_record;
-
+    // ... etc. ...
 }
 ```
 
@@ -45,7 +47,7 @@ cd build
 Expected output would look like this:
 
 ```console
-./library_example 40
+$ ./library_example 40
 Answer = 267914296
 [wall]|0> Outputting 'timemory-library-example-output/wall.flamegraph.json'...
 [wall]|0> Outputting 'timemory-library-example-output/wall.json'...

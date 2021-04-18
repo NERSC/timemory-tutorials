@@ -5,21 +5,21 @@ Timemory allows for easy labelling of regions of code with markers using `timemo
 ```cpp
 int main(int argc, char** argv)
 {
-// initialize timemory library
+    // initialize timemory library
     timemory_init_library(argc, argv);
 
-// set default components
+    // set default components
     timemory_set_default("wall_clock, cpu_clock");
 
-// begin recording for region main
+    // begin recording for region main
     timemory_push_region("main");
 
     //... code in the region ...
 
-// end recording for main region
+    // end recording for main region
     timemory_pop_region("main");
 
-// finalize timemory library
+    // finalize timemory library
     timemory_finalize_library();
     return EXIT_SUCCESS;
 }

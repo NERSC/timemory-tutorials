@@ -4,15 +4,15 @@ Timemory allows the flexibility of switching components that are being collected
 
 ```cpp
 // replaces the default component set with cpu_util and current_peak_rss
- timemory_push_components("cpu_util, current_peak_rss");
+timemory_push_components("cpu_util, current_peak_rss");
 
- //... some code ...
+//... some code ...
 
 // return to the default components that were set in the beginning
- timemory_pop_components();
+timemory_pop_components();
 ```
 
-## Exercise#1
+## Exercise 1
 
 As an exercise modify the [example.cpp](example.cpp) in this directory so that for region `total_loops` and region `loop_1_region` only components `cpu_util` and `current_peak_rss` are collected. A solution for reference has been provided in the [solution](solution) directory. To build and run both the [example.cpp](example.cpp) and the solution use below instructions:
 
@@ -26,7 +26,7 @@ cd build
 expected output should like this:
 
 ```console
-./library_example 40
+$ ./library_example 40
 Answer = 1095815001
 [current_peak_rss]|0> Outputting 'timemory-library-example-output/current_peak_rss.json'...
 [current_peak_rss]|0> Outputting 'timemory-library-example-output/current_peak_rss.tree.json'...
@@ -95,18 +95,18 @@ Timemory also offers an option to add and remove components from the default com
 
 ```cpp
 // add new components to the default list of components
-    timemory_add_components("current_peak_rss, cpu_util");
+timemory_add_components("current_peak_rss, cpu_util");
 
 // ... some code here ...
 
 // remove components from default set of components
-    timemory_remove_components("current_peak_rss, cpu_util");
+timemory_remove_components("current_peak_rss, cpu_util");
 ```
 
 Using the above two calls, as an exercise modify the [example.cpp](example.cpp) code so that for region `total_loops` and region `loop_1_region` in addition to the components set in the beginning two additional components of `current_peak_rs` and `cpu_util` are also collected. Build and run using the same instructions as above. Your expected output should look like this:
 
 ```console
-./library_example 40
+$ ./library_example 40
 Answer = 1095815001
 [current_peak_rss]|0> Outputting 'timemory-library-example-output/current_peak_rss.json'...
 [current_peak_rss]|0> Outputting 'timemory-library-example-output/current_peak_rss.tree.json'...
