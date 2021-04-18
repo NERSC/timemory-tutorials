@@ -2,7 +2,7 @@
 
 Timemory allows the flexibility of switching components that are being collected. This makes it possible to collect different metrics for different regions of the code. For instance from the `example.cpp` file, if we want to replace the default list of components that is set at the beginning with `CPU utilization` and `peak resident set size` then we can make use of the below calls:
 
-```
+```cpp
 // replaces the default component set with cpu_util and current_peak_rss
  timemory_push_components("cpu_util, current_peak_rss");
 
@@ -16,7 +16,7 @@ Timemory allows the flexibility of switching components that are being collected
 
 As an exercise modify the `example.cpp` in this directory so that for region `total_loops` and region `loop_1_region` only components `cpu_util` and `current_peak_rss` are collected. A solution for reference has been provided in the `solution` directory. To build and run both the `example.cpp` and the solution use below instructions:
 
-```
+```console
 mkdir build
 cd build
 cmake ../
@@ -27,7 +27,7 @@ make
 
 expected output should like this:
 
-```
+```console
 ./library_example 40
 Answer = 1095815001
 [current_peak_rss]|0> Outputting 'timemory-library-example-output/current_peak_rss.json'...
@@ -94,7 +94,7 @@ You can observe that the regions `total_loops` and `loop_1_region` are only pres
 ## Exercise 2
 Timemory also offers an option to add and remove components from the default component set. This can be done using the below API calls:
 
-```
+```cpp
 // add new components to the default list of components
     timemory_add_components("current_peak_rss, cpu_util");
 
@@ -105,7 +105,7 @@ Timemory also offers an option to add and remove components from the default com
 ```
 Using the above two calls, as an exercise modify the `example.cpp` code so that for region `total_loops` and region `loop_1_region` in addition to the components set in the beginning two additional components of `current_peak_rs` and `cpu_util` are also collected. Build and run using the same instructions as above. Your expected output should look like this:
 
-```
+```console
 ./library_example 40
 Answer = 1095815001
 [current_peak_rss]|0> Outputting 'timemory-library-example-output/current_peak_rss.json'...

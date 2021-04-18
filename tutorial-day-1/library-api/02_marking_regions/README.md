@@ -1,7 +1,7 @@
 # 02_marking_regions
 
 Timemory allows for easy labelling of regions of code with markers using `timemory_push_region()` and `timemory_pop_region()` calls. For instance:
-```
+```cpp
 int main(int argc, char** argv)
 {
 // initialize timemory library
@@ -30,7 +30,7 @@ As an exercise you will need to modify the `example.cpp` code available in this 
 
 ### Building and running
 To build the code in `example.cpp` use:
-```
+```console
 mkdir build
 cd build
 cmake ../
@@ -42,12 +42,12 @@ export TIMEMORY_ENABLED=true
 ```
 To run use:
 
-```
+```console
 ./library_example 40
 ```
 
 Expected output:
-```
+```console
 ./library_example 40
 Answer = 1095815001
 [cpu]|0> Outputting 'timemory-library-example-output/cpu.flamegraph.json'...
