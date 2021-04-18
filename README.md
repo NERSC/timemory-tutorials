@@ -17,17 +17,17 @@ The materials for Day 2 of the tutorial are in the `tutorial-day-2` folder.
 Day 2 focuses on the toolkit features of timemory and will teach you how to leverage timemory
 to build your own extensions, libraries, and tools.
 
-| Topic                                    | Estimated Duration |                                                                      |
-| ---------------------------------------- | :----------------: | :------------------------------------------------------------------: |
-| Introduction                             |     30 minutes     |           [README](tutorial-day-1/introduction/README.md)            |
-| Command Line Tools (D)                   |     10 minutes     |        [README](tutorial-day-1/command-line-tools/README.md)         |
-| Command Line Tools (E)                   |     30 minutes     |        [README](tutorial-day-1/command-line-tools/README.md)         |
-| Library API (P)                          |     10 minutes     |            [README](tutorial-day-1/library-api/README.md)            |
-| Library API (E)                          |     30 minutes     |            [README](tutorial-day-1/library-api/README.md)            |
-| Python API and tools (P)                 |     10 minutes     |       [README](tutorial-day-1/python-api-and-tools/README.md)        |
-| Python API and tools (D, E)              |     30 minutes     |       [README](tutorial-day-1/python-api-and-tools/README.md)        |
-| Visualizing and Analyzing Results (P, D) |     15 minutes     | [README](tutorial-day-1/visualizing-and-analyzing-results/README.md) |
-| __Total__                                |    165 minutes     |                                                                      |
+| Topic                                    | Estimated Duration |
+| ---------------------------------------- | :----------------: |
+| Introduction                             |     30 minutes     |
+| Command Line Tools (D)                   |     10 minutes     |
+| Command Line Tools (E)                   |     30 minutes     |
+| Library API (P)                          |     10 minutes     |
+| Library API (E)                          |     30 minutes     |
+| Python API and tools (P)                 |     10 minutes     |
+| Python API and tools (D, E)              |     30 minutes     |
+| Visualizing and Analyzing Results (P, D) |     15 minutes     |
+| __Total__                                |    165 minutes     | 
 
 * (P) &#8594; Presentation
 * (E) &#8594; Exercises
