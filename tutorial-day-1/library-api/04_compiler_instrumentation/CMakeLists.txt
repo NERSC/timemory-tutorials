@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
-project(01_compiler_instrumentation LANGUAGES CXX)
+project(04_compiler_instrumentation LANGUAGES CXX)
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 if("${CMAKE_BUILD_TYPE}" STREQUAL "")
@@ -18,10 +18,3 @@ target_sources(compiler_instrumentation PRIVATE example.cpp)
 # link to timemory target
 #
 # <insert code here>
-#
-
-enable_testing()
-add_test(
-    NAME              compiler-instrumentation
-    COMMAND           $<TARGET_FILE:compiler_instrumentation>
-    WORKING_DIRECTORY $<TARGET_FILE_DIR:compiler_instrumentation>)
