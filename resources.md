@@ -56,6 +56,8 @@ Proceed to [Testing Installation](testing.md).
 
 ## Docker Container
 
+> Requires [installing docker](https://docs.docker.com/get-docker/) on your local machine
+
 The docker containers are Ubuntu 18.04 images with the GCC 7.5 compiler.
 Both containers have timemory installed with all the necessary dependencies for the exercises.
 Some exercises may try to collect hardware counters via PAPI. If you are running docker
@@ -82,10 +84,12 @@ docker pull nersc/timemory:ecp-2021-gpu
 nvidia-docker run -it --rm -v $PWD:/home/timemory-tutorials nersc/timemory:ecp-2021-gpu
 ```
 
-
 ### Local Installation Instructions
 
-If your native system is Linux, consider using spack to install dyninst and/or PAPI:
+> Tip: See [CMake Options Documentation](https://timemory.readthedocs.io/en/develop/installation.html#cmake-options).
+
+If your native system is Linux, you might want to consider using spack to install
+dyninst and/or PAPI but using dyninst and/or PAPI are optional:
 
 ```console
 mkdir scripts/tools
@@ -100,6 +104,10 @@ spack load boost dyninst
 
 #### Linux
 
+> If you decided to not install dyninst, use `TIMEMORY_USE_DYNINST=OFF`
+
+> If you decided to not install PAPI, use `TIMEMORY_USE_PAPI=OFF`
+
 ```console
 PYTHON_VERSION=3.8
 git clone https://github.com/NERSC/timemory.git timemory-source
@@ -110,6 +118,7 @@ cmake -B timemory-build \
   -D CMAKE_BUILD_TYPE=RelWithDebInfo \
   -D TIMEMORY_USE_DYNINST=ON \
   -D TIMEMORY_USE_GOTCHA=ON \
+  -D TIMEMORY_USE_PAPI=ON \
   -D TIMEMORY_USE_MPI=ON \
   -D TIMEMORY_USE_PYTHON=ON \
   -D TIMEMORY_BUILD_TOOLS=ON \
