@@ -1,0 +1,75 @@
+FROM ecpe4s/ubuntu18.04-e4s:latest as builder
+
+ENV SHELL /bin/bash
+ENV BASH_ENV /etc/bash.bashrc
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN spack env create --with-view /opt/view timemory && \
+    spack \
+    --env timemory \
+    install \
+        caliper \
+        cmake \
+        cuda \
+        dyninst \
+        boost \
+        gotcha \
+        mpich \
+        ninja \
+        papi@5.7.0 \
+        python@3.7.6 \
+        py-pip && \
+    spack env activate /opt/spack/var/spack/environments/timemory --sh -d >> /etc/profile.d/z10_spack_environment.sh
+
+SHELL [ "/bin/bash", "--login", "-c" ]
+
+WORKDIR /opt/software
+
+# for CUDA include directories and libraries
+ENV CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH}:/opt/view/targets/x86_64-linux
+
+RUN git clone https://github.com/NERSC/timemory.git timemory-source && \
+    source /opt/spack/share/spack/setup-env.sh && \
+    spack load cuda && \
+    which -a python && \
+    python -m pip install --user -r timemory-source/.requirements/runtime.txt && \
+    python -m pip install --user -r timemory-source/.requirements/mpi_runtime.txt && \
+    cmake -B timemory-build \
+        -DCMAKE_INSTALL_PREFIX=/opt/view \
+        -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+        -DBUILD_SHARED_LIBS=ON \
+        -DBUILD_STATIC_LIBS=ON \
+        -DTIMEMORY_USE_{CALIPER,CUDA,CUPTI,DYNINST,GOTCHA,MPI,PAPI,PYTHON}=ON \
+        -DTIMEMORY_BUILD_{CALIPER,GOTCHA,KOKKOS_CONFIG}=OFF \
+        -DTIMEMORY_BUILD_{TOOLS,KOKKOS_TOOLS}=ON \
+        -DTIMEM_PAPI_TARGET=PAPI::papi-shared \
+        timemory-source && \
+    cmake --build timemory-build --target all --parallel 8 && \
+    cmake --build timemory-build --target install
+
+# Bare OS image to run the installed executables
+FROM ecpe4s/ubuntu18.04-e4s:latest
+
+COPY --from=builder /opt/view /opt/view
+COPY --from=builder /root/.local /root/.local
+COPY --from=builder /opt/spack/var/spack/environments /opt/spack/var/spack/environments
+COPY --from=builder /etc/profile.d/z10_spack_environment.sh /etc/profile.d/z10_spack_environment.sh
+
+RUN echo 'export PS1="\[$(tput bold)\]\[$(tput setaf 1)\][timemory]\[$(tput setaf 2)\] \u\[$(tput sgr0)\]:\w $ \[$(tput sgr0)\]"' >> ~/.bashrc
+
+ENV HOME /root
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US
+ENV LC_ALL C
+ENV SHELL /bin/bash
+ENV BASH_ENV /etc/bash.bashrc
+ENV DEBIAN_FRONTEND noninteractive
+ENV PATH ${PATH}:/root/.local/bin
+ENV PYTHONPATH ${PYTHONPATH}:/root/.local/lib/python3.7/site-packages
+
+USER root
+WORKDIR /home
+SHELL [ "/bin/bash", "--login", "-c" ]
+
+# ENTRYPOINT [ "/runtime-entrypoint.sh" ]
+ENTRYPOINT ["/bin/bash", "--rcfile", "/etc/profile", "-l"]
