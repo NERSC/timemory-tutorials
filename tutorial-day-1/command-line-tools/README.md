@@ -84,7 +84,7 @@ timemory-plotter -t basic_ai -f timemory-basic.region-output/cpu_roofline_ai.jso
 
 The above command will create a png image from the data available in the `timemory-basic.region-output/cpu_roofline_ai.json` and use the string passed to `-t` as the title.
 
-### timemory-roofline
+## timemory-roofline
 
 In order to generate a roofline plot for the "basic" application, follow the following steps:
 
