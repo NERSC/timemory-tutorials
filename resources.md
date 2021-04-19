@@ -14,7 +14,7 @@ The training code should have been provided to you in an email. Once you have re
 User Agreement Form, you will be given a training account of the form `trainxxx` and the account
 will be activated immediately. You can login into the compute systems with the provided password without MFA.
 
-The timemory ECP tutorial has reserved 4 Haswell nodes and 8 GPU nodes for the tutorial. The reservations are:
+The timemory ECP tutorial has reserved 4 Haswell nodes and 8 GPU nodes for the tutorial. The __*reservation names*__ are:
 
 | Day | System  | Reservation Name      |
 | --- | ------- | --------------------- |
