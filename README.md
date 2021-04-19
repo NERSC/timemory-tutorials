@@ -25,8 +25,8 @@ to build your own extensions, libraries, and tools.
 | Library API (P)                          |     10 minutes     |
 | Library API (E)                          |     30 minutes     |
 | Python API and tools (P)                 |     10 minutes     |
-| Python API and tools (D, E)              |     30 minutes     |
-| Visualizing and Analyzing Results (P, D) |     15 minutes     |
+| Python API and tools (D, E)              |     25 minutes     |
+| Visualizing and Analyzing Results (P, D) |     20 minutes     |
 | __Total__                                |    165 minutes     |
 
 * (P) &#8594; Presentation
