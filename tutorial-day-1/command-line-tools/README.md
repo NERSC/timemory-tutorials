@@ -122,3 +122,16 @@ timemory-roofline -t cpu_roofline -op timemory-lulesh-output/cpu_roofline_op.jso
 ```
 
 > Feature: you can add `-e` option within a CTest to upload the image to CDash
+
+## timemory-analyze
+
+Timemory supports complex data analysis via [hatchet](https://github.com/hatchet/hatchet). Hatchet will convert timemory JSON tree
+files into pandas dataframes. The `timemory-analyze` executable provides a subset of these capabilities via the command-line.
+
+```console
+export KOKKOS_PROFILE_LIBRARY=libtimemory.so
+export TIMEMORY_TIME_OUTPUT=OFF
+lulesh
+timemory-analyze -f tree -- timemory-kokkosp-output/wall.tree.json
+timemory-analyze -f tree flamegraph -o timemory-kokkosp-output/analysis -- timemory-kokkosp-output/wall.tree.json
+```
