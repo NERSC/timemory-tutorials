@@ -49,7 +49,7 @@ cd timemory-tutorials
 module purge
 module load cgpu gcc
 module load timemory
-salloc --reservation=<name> -A ntrain -N 1 -C gpu -G 1 -n 1 -c 20 -t 02:00:00
+salloc --reservation=<name> -A ntrain -q shared -N 1 -C gpu -G 1 -n 1 -c 20 -t 02:00:00
 ```
 
 Proceed to [Testing Installation](testing.md).
