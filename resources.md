@@ -36,7 +36,7 @@ git clone -b ecp-2021 https://github.com/NERSC/timemory-tutorials.git
 cd timemory-tutorials
 module swap PrgEnv-intel PrgEnv-gnu
 module load timemory
-salloc --reservation=<name> -A ntrain -q shared -N 1 -n 1 -c 8 -t 02:00:00
+salloc --reservation=<reservation-name> -A ntrain -q shared -N 1 -n 1 -c 8 -t 02:00:00
 ```
 
 > If using existing NERSC account, replace `ntrain` with `m3502`
