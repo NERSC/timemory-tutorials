@@ -86,22 +86,28 @@ The above command will create a png image from the data available in the `timemo
 
 ## timemory-roofline
 
-In order to generate a roofline plot for the "basic" application, follow the following steps:
+In order to generate a roofline plot for the lulesh application via the kokkos profiling hooks, configure your environment as follows:
 
 ```console
+export KOKKOS_PROFILE_LIBRARY=libtimemory.so
 export TIMEMORY_GLOBAL_COMPONENTS=cpu_roofline
+export TIMEMORY_TIME_OUTPUT=OFF
 ```
 
-The above command sets the timemory to collect `cpu_roofline` component.
+The above commands set the kokkos profiling library to timemory, configures timemory to collect `cpu_roofline` component, and disables time-stamped subdirectories
+(which commonly get enabled by the kokkos profiling hooks).
+
+Roofline generation usually requires two passes to collect all the hardware counters so the `timemory-roofline` script just executes everything after `--` once,
+toggles a few environment variables, and then executes everything after `--` again:
 
 ```console
-timemory-run -d cpu_roofline -o basic.inst -- basic.trace
+timemory-roofline -t cpu_roofline -- lulesh
+timemory-roofline -t cpu_roofline -- srun -n 2 lulesh
 ```
 
-The above command will add `cpu_roofline` intrumentation to the `basic.trace` executable.
+You should have a `roofline.png` image in your directory. If the script failed at the end with an error that it could not find the files,
+you can run the script without the `--` and everything after it and passing the necessary `*_op.json` and `*_ai.json` files:
 
 ```console
-timemory-roofline -t cpu_roofline -- basic.inst
+timemory-roofline -t cpu_roofline -op timemory-lulesh-output/cpu_roofline_op.json -ai timemory-lulesh-output/cpu_roofline_ai.json
 ```
-
-The above command will use the `timemory-roofline` script to generate a roofline plot from the `basic.inst` binary instrumentation.
