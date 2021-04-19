@@ -41,6 +41,8 @@ You can build and run this using:
 cmake -B build .
 cmake --build build --target all
 cd build
+
+export TIMEMORY_ENABLED=true
 ./library_example 40
 ```
 
