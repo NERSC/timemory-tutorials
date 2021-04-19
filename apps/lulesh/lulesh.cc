@@ -2254,10 +2254,16 @@ main(int argc, char* argv[])
         timeval start;
         gettimeofday(&start, NULL);
 #endif
+        Kokkos::Tools::pushRegion("Time-Loop");
         while((locDom.time() < locDom.stoptime()) && (locDom.cycle() < opts.its))
         {
+            Kokkos::Tools::pushRegion("TimeIncrement");
             TimeIncrement(locDom);
+            Kokkos::Tools::popRegion();
+
+            Kokkos::Tools::pushRegion("LagrangeLeapFrog");
             LagrangeLeapFrog(locDom);
+            Kokkos::Tools::popRegion();
 
             if((opts.showProg != 0) && (opts.quiet == 0) && (myRank == 0))
             {
@@ -2265,6 +2271,7 @@ main(int argc, char* argv[])
                        double(locDom.time()), double(locDom.deltatime()));
             }
         }
+        Kokkos::Tools::popRegion();
 
         double elapsed_time;
 #if USE_MPI
