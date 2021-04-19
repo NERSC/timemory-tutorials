@@ -69,7 +69,7 @@ The above command adds `cpu_util` and `peak_rss` component instrumentation to th
 ```
 
 The above command would then print the cpu utilization and peak rss of the lulesh executable.
-However, these are just the _default_ components. You can control the components are runtime via the `TIMEMORY_TRACE_COMPONENTS` environment variable.
+However, these are just the _default_ components. You can control the components at runtime via the `TIMEMORY_TRACE_COMPONENTS` environment variable.
 
 This is an extremely useful tool which allows different instrumentations to be added to an executable and saved individually for later use.
 The tool also allows usage of a custom instrumentation library along with other timemory components. Refer `02_timemory_run/03_binary_rewrite_custom_components`.
