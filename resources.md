@@ -126,7 +126,8 @@ cmake -B timemory-build \
   -D TIMEMORY_USE_MPI=ON \
   -D TIMEMORY_USE_PYTHON=ON \
   -D TIMEMORY_BUILD_TOOLS=ON \
-  -D PYTHON_EXECUTABLE=$(which python${PYTHON_VERSION})
+  -D PYTHON_EXECUTABLE=$(which python${PYTHON_VERSION}) \
+  timemory-source
 cmake --build timemory-build --target all --parallel 8
 cmake --build timemory-build --target install --parallel 8
 export CMAKE_PREFIX_PATH=$PWD/timemory-install:${CMAKE_PREFIX_PATH}
@@ -150,7 +151,8 @@ cmake -B timemory-build \
   -D TIMEMORY_USE_MPI=ON \
   -D TIMEMORY_USE_PYTHON=ON \
   -D TIMEMORY_BUILD_TOOLS=ON \
-  -D PYTHON_EXECUTABLE=$(which python${PYTHON_VERSION})
+  -D PYTHON_EXECUTABLE=$(which python${PYTHON_VERSION}) \
+  timemory-source
 cmake --build timemory-build --target all --parallel 8
 cmake --build timemory-build --target install --parallel 8
 export CMAKE_PREFIX_PATH=$PWD/timemory-install:${CMAKE_PREFIX_PATH}
