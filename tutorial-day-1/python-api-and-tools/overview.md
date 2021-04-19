@@ -1,6 +1,10 @@
 # Overview
 
-Here we'll outline and demo the python profiling and tracing capabilities of timemory.
+Here we'll outline and demo the Python profiling capabilities of timemory. 
+
+Note that tracing in timemory is also possible. We have several tracing
+exercises at the bottom of this page. If you would like to see what it looks
+like to use timemory tracing in a Python program please see [here](solutions).
 
 ## Profiling
 
@@ -184,9 +188,16 @@ Answer = 509443184046766.0
 
 Exercise 1: Command line tracing
 
+Hint: How does the command line syntax change? 
+
 Exercise 2: Tracing with a decorator
 
+Hint: How does the import statement change? Does the decorator change?
+
 Exercise 3: Tracing with a context manager
+
+Hint: How does the import statement change? Does the context manager change?
+
 
 You can find the solutions in the [solutions](solutions) folder, but we encourage you to try them first!
 
