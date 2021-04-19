@@ -41,7 +41,7 @@ timem -- lulesh
 Use the `-o` option to generate a JSON file with the full command and the measurements:
 
 ```console
-timem -o timem-report -- lulesh
+timem -o timem-output/lulesh -- lulesh
 ```
 
 If `timem` was built with PAPI support, you can use the `-e` option to collect hardware counters.
@@ -84,6 +84,15 @@ timemory-plotter -t basic_ai -f timemory-basic.region-output/cpu_roofline_ai.jso
 
 The above command will create a png image from the data available in the `timemory-basic.region-output/cpu_roofline_ai.json` and use the string passed to `-t` as the title.
 
+You can also pass in output files from `timem` and render a table or a plot. Use the output from `timem -o -- lulesh`:
+
+```console
+timemory-plotter -t "LuLesh" -f timem-output/lulesh.json
+timemory-plotter -t "LuLesh" -f timem-output/lulesh.json --table
+```
+
+> Feature: you can add `-e` option within a CTest to upload the image to CDash
+
 ## timemory-roofline
 
 In order to generate a roofline plot for the lulesh application via the kokkos profiling hooks, configure your environment as follows:
@@ -111,3 +120,5 @@ you can run the script without the `--` and everything after it and passing the 
 ```console
 timemory-roofline -t cpu_roofline -op timemory-lulesh-output/cpu_roofline_op.json -ai timemory-lulesh-output/cpu_roofline_ai.json
 ```
+
+> Feature: you can add `-e` option within a CTest to upload the image to CDash

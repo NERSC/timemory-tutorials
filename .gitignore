@@ -49,7 +49,8 @@ CMakeFiles
 *~
 
 # timemory output
-timemory-*-output
+timemory-*output
+timem-*output
 /apps/build.sh-apps
 
 /bin/*
