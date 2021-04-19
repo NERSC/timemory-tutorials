@@ -8,7 +8,7 @@ export PATH=${REPO_DIR}/bin:${PATH}
 
 # add apps lib install to library path
 if [ "$(uname)" = "Darwin" ]; then
-    export DYLD_LIBRARY_PATH=${REPO_DIR}/lib:${DYLD_LIBRARY_PATH}
+    export DYLD_LIBRARY_PATH=${REPO_DIR}/lib64:${REPO_DIR}/lib:${DYLD_LIBRARY_PATH}
 else
-    export LD_LIBRARY_PATH=${REPO_DIR}/lib:${LD_LIBRARY_PATH}
+    export LD_LIBRARY_PATH=${REPO_DIR}/lib64:${REPO_DIR}/lib:${LD_LIBRARY_PATH}
 fi
