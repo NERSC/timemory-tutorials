@@ -20,13 +20,15 @@ As an exercise modify the [example.cpp](example.cpp) in this directory so that f
 cmake -B build .
 cmake --build build --target all
 cd build
+
+export TIMEMORY_ENABLED=true
 ./library_example 40
 ```
 
 expected output should like this:
 
 ```console
-$ ./library_example 40
+./library_example 40
 Answer = 1095815001
 [current_peak_rss]|0> Outputting 'timemory-library-example-output/current_peak_rss.json'...
 [current_peak_rss]|0> Outputting 'timemory-library-example-output/current_peak_rss.tree.json'...
