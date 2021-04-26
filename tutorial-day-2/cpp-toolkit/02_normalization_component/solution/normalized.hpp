@@ -1,4 +1,6 @@
 
+#include "timemory/mpl/math.hpp"
+#include "timemory/mpl/stl.hpp"
 #include <timemory/components.hpp>
 #include <timemory/components/base.hpp>
 #include <timemory/mpl/types.hpp>
@@ -42,6 +44,10 @@ struct is_available<component::normalized<T>>
 //
 template <typename T>
 struct base_has_accum<component::normalized<T>> : false_type
+{};
+//
+template <typename T>
+struct echo_enabled<component::normalized<T>> : false_type
 {};
 }  // namespace trait
 }  // namespace tim
@@ -113,7 +119,14 @@ template <typename T>
 auto
 normalized<T>::get() const
 {
+    // below might not be valid for more complex components
     return get_value().get() / data_size;
+
+    // this will be valid for more complex components
+    // auto _v            = get_value().get();
+    // using compute_type = math::compute<decay_t<decltype(_v)>>;
+    // compute_type::divide(_v, data_size);
+    // return _v;
 }
 
 template <typename T>
@@ -121,7 +134,13 @@ auto
 normalized<T>::get_display() const
 {
     auto _v = get_value();
+    // below might not be valid for more complex components
     _v /= data_size;
+
+    // this will be valid for more complex components
+    // using compute_type = math::compute<T>;
+    // compute_type::divide(_v, data_size);
+
     return _v.get_display();
 }
 
