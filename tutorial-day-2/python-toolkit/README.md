@@ -1,5 +1,9 @@
 # Python Toolkit
 
+The timemory python bindings provide stand-alone classes for collecting data
+in tools and full access to the storage for creating GUIs and/or analysis
+tools in Python.
+
 ## Individual Components
 
 Each individual component is available as a stand-alone Python class.
@@ -10,26 +14,27 @@ will not store any data in the timemory call-graph (when applicable).
 
 ```python
 import time
-import timemory
-from  timemory.component import WallClock
+from timemory.component import WallClock
 
-# instantiate wall clock component
-wc = WallClock("wall")
+# create wall clock component instance
+wc = WallClock("<label>")
+
 # start the clock
 wc.start()
+
 # sleep
 time.sleep(2)
+
 # stop the clock
 wc.stop()
+
 # get data
 result = wc.get()
-#finalize timemory
-timemory.finalize()
 ```
 
 ## Storage
 
-Timemory allows direct access to the aforementioned call-graph storage.
+Timemory allows direct access to the call-graph storage.
 The call-graph storage is the accumulated data for components which occur through
 push and pop operations. These push and pop operations are implicitly
 performed via decorators, context-managers, the function profiler, and the
