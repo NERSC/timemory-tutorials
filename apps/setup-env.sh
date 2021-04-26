@@ -12,3 +12,6 @@ if [ "$(uname)" = "Darwin" ]; then
 else
     export LD_LIBRARY_PATH=${REPO_DIR}/lib64:${REPO_DIR}/lib:${LD_LIBRARY_PATH}
 fi
+
+export OMP_PROC_BIND=spread
+export OMP_PLACES=threads

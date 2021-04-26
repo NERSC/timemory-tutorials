@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 3.11 FATAL_ERROR)
 get_filename_component(INSTALL_DIR ${CMAKE_CURRENT_LIST_DIR} PATH)
 set(CMAKE_C_FLAGS "" CACHE STRING "")
 set(CMAKE_CXX_FLAGS "" CACHE STRING "")
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH ON)
 set(CMAKE_INSTALL_PREFIX ${INSTALL_DIR} CACHE STRING "Installation directory")
 
 project(timemory-tutorials-apps
@@ -12,8 +13,10 @@ project(timemory-tutorials-apps
 
 option(USE_MPI "Enable MPI support" ON)
 option(USE_CUDA "Enable CUDA support" OFF)
+option(USE_TIMEMORY "Enable timemory support" OFF)
 option(BUILD_SHARED_LIBS "Build dynamic libraries" ON)
 
+set(CMAKE_INSTALL_MESSAGE LAZY)
 set(CMAKE_CXX_STANDARD 17 CACHE STRING "")
 set(CMAKE_CXX_EXTENSIONS OFF CACHE BOOL "")
 set(CMAKE_CXX_STANDARD_REQUIRED ON CACHE BOOL "")
@@ -45,3 +48,4 @@ endif()
 add_subdirectory(kokkos)
 add_subdirectory(lulesh)
 # add_subdirectory(tomopy)
+add_subdirectory(matvec)

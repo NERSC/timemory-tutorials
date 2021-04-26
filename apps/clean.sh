@@ -10,3 +10,7 @@ do
         if [ -n "${FILES}" ]; then rm ${FILES}; fi
     fi
 done
+
+if [ -d $(dirname ${BASH_SOURCE[0]})/build.sh-apps ]; then
+    rm -r $(dirname ${BASH_SOURCE[0]})/build.sh-apps
+fi
