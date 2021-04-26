@@ -44,8 +44,7 @@ namespace api   = tim::api;
 using papi_comp_t = comp::papi_tuple<PAPI_TOT_INS, PAPI_TOT_CYC>;
 using bundle_t =
     tim::component_bundle<api::mm, comp::wall_clock, comp::normalized<comp::wall_clock>,
-                          comp::cpu_clock, comp::normalized<comp::cpu_clock>, papi_comp_t,
-                          comp::normalized<papi_comp_t>, comp::user_global_bundle>;
+                          comp::user_global_bundle>;
 using stop_last_config_t = quirk::config<quirk::stop_last_bundle>;
 
 namespace
