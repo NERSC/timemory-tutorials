@@ -361,3 +361,12 @@ MM sum = 16172.9
 | |1>>> |_mm           |      1 |      1 | wall   | sec    | 3.671e-01 | 3.671e-01 | 3.671e-01 | 3.671e-01 | 0.000e+00 |  100.0 |
 |-------------------------------------------------------------------------------------------------------------------------------|
 ```
+
+## Accessing Storage
+
+```cpp
+auto _data              = tim::storage<T>::instance()->get();
+auto _mpi_data          = tim::storage<T>::instance()->mpi_get();
+auto _upcxx_data        = tim::storage<T>::instance()->upc_get();
+auto _mpi_or_upcxx_data = tim::storage<T>::instance()->dmp_get();
+```

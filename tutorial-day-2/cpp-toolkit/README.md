@@ -391,8 +391,8 @@ _bar.sample();
 
 ## Exercises
 
-- [00_basic_usage](00_basic_usage.md) will have you add various components
-- [01_lightweight_usage](01_lightweight_usage.md) will have you collect temporary data and add it into another instance
-- [02_normalization_component](02_normalization_component.md) will have you create a new component which derives data from other components and reports values independent of the problem size
-- [03_replace_function](03_replace_function.md) will have you replace an externally-defined function with another implementation
-- [04_wrap_function](04_wrap_function.md) will have you wrap a function
+- [00_basic_usage](00_basic_usage/README.md) will have you add various components
+- [01_lightweight_usage](01_lightweight_usage/README.md) will have you collect temporary data and add it into another instance
+- [02_normalization_component](02_normalization_component/README.md) will have you create a new component which derives data from other components and reports values independent of the problem size
+- [03_replace_function](03_replace_function/README.md) will have you replace an externally-defined function with another implementation
+- [04_wrap_function](04_wrap_function/README.md) will have you wrap a function
