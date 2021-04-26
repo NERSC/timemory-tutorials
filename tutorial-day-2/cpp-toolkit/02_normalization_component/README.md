@@ -145,7 +145,7 @@ We provide 4 metadata functions and 1 metadata value:
   - hint: a "normalized" to `T::label()`
 - `static std::string description()`
   - description of component
-  - hint: add "normalized" to `T::description`
+  - hint: add "normalized" to `T::description()`
 - `static auto unit()`
   - e.g. `unit::sec`, `unit::megabyte`, etc.
   - hint: return `T::unit()`

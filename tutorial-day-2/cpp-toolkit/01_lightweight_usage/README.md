@@ -34,7 +34,7 @@ execute_matmul(int64_t s, int64_t imax, int64_t nitr)
 {
     // ...
 
-    std::cout << ">>> MM average: " << (nseconds / ncount) << " ns [laps: " << ncount
+    std::cout << ">>> MM average: " << (nseconds / static_cast<double>(ncount)) << " ns [laps: " << ncount
               << "]" << std::endl;
 
     return sum;
@@ -129,3 +129,7 @@ MM sum = 32345.8
                 3824 prio_cxt_swch
                    1 vol_cxt_swch
 ```
+
+## Minor Overhead, Major Benefits
+
+The overhead of timemory in this situation is approximately 19 nanoseconds (`(10.8-10.2)/31250000`). The benefit is, naturally, that `lightweight_tuple<wall_clock>` can be trivially changed to use any other component (or include additional components), e.g. `lightweight_tuple<voluntary_context_switch>`.
