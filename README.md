@@ -17,6 +17,8 @@ The materials for Day 2 of the tutorial are in the `tutorial-day-2` folder.
 Day 2 focuses on the toolkit features of timemory and will teach you how to leverage timemory
 to build your own extensions, libraries, and tools.
 
+### Day 1
+
 | Topic                                    | Estimated Duration |
 | ---------------------------------------- | :----------------: |
 | Introduction                             |     30 minutes     |
@@ -28,6 +30,22 @@ to build your own extensions, libraries, and tools.
 | Python API and tools (D, E)              |     25 minutes     |
 | Visualizing and Analyzing Results (P, D) |     20 minutes     |
 | __Total__                                |    165 minutes     |
+
+* (P) &#8594; Presentation
+* (E) &#8594; Exercises
+* (D) &#8594; Demo
+
+### Day 2
+
+| Topic                               | Estimated Duration |
+| ----------------------------------- | :----------------: |
+| Python Toolkit                      |     20 minutes     |
+| C++ Toolkit Basic Usage (E)         |     30 minutes     |
+| C++ Toolkit Lightweight Usage (E)   |     20 minutes     |
+| C++ Toolkit Writing Component (E)   |     30 minutes     |
+| C++ Toolkit Replacing Functions (E) |     30 minutes     |
+| C++ Toolkit Wrapping Function (E)   |     30 minutes     |
+| __Total__                           |    160 minutes     |
 
 * (P) &#8594; Presentation
 * (E) &#8594; Exercises
