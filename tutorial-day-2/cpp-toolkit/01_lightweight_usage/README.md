@@ -34,7 +34,7 @@ execute_matmul(int64_t s, int64_t imax, int64_t nitr)
 {
     // ...
 
-    std::cout << ">>> MM average: " << (nseconds / ncount) << " ns [laps: " << ncount
+    std::cout << ">>> MM average: " << (nseconds / static_cast<double>(ncount)) << " ns [laps: " << ncount
               << "]" << std::endl;
 
     return sum;
