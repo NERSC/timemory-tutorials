@@ -5,7 +5,7 @@ import time
 import argparse
 import numpy as np
 import timemory
-from timemory.bundle import marker
+from timemory.profiler import profile
 
 
 def get_components(extra=[]):
@@ -15,12 +15,12 @@ def get_components(extra=[]):
     return ["user_global_bundle"] + timemory.settings.components.split() + extra
 
 
-@marker(get_components)
+@profile(get_components)
 def fibonacci(n):
     return n if n < 2 else (fibonacci(n - 1) + fibonacci(n - 2))
 
 
-@marker(get_components)
+@profile(get_components)
 def inefficient(n):
     a = 0
     for i in range(n):
@@ -31,7 +31,7 @@ def inefficient(n):
     return arr.sum()
 
 
-@marker(get_components)
+@profile(get_components)
 def run(n):
     print(f"Running fibonacci({n})...")
     ret = fibonacci(n) + fibonacci(n % 5 + 1)

@@ -28,6 +28,7 @@ def run(n):
 
 
 if __name__ == "__main__":
+
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "-n",
@@ -37,7 +38,7 @@ if __name__ == "__main__":
         default=19,
     )
 
-    args = parser.parse_args(sys.argv[1:])
+    args = parser.parse_args()
 
     ts = time.perf_counter()
     ans = run(args.nfib)

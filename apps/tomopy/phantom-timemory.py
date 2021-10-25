@@ -3,14 +3,48 @@
 
 """TomoPy script to reconstruct a built-in phantom."""
 
+import os
 import sys
 import argparse
 import traceback
 import tomopy
 import numpy as np
+
+# miscellaneous output functions
 import misc
+import timemory
+from timemory.bundle import marker
+from timemory.profiler import profile
+from timemory.trace import trace
+from timemory.profiler import config as profile_config
+from timemory.trace import config as trace_config
+
+components = ["wall_clock"]
+profile_config.only_filenames += ["(site|dist)-packages[/\\]+tomopy"]
+trace_config.only_filenames += ["(site|dist)-packages[/\\]+tomopy"]
+# trace_config.skip_filenames += ["[/\\]numpy", "(dtype|copy|os|_collections_abc)\\.py$"]
+profile_config.skip_filenames += ["dtype.py$"]
+trace_config.skip_filenames += ["dtype.py$"]
 
 
+def get_components_env():
+    return os.environ.get("COMPONENTS", "").split()
+
+
+def get_components():
+    return components + ["user_global_bundle"] + [get_components_env]
+
+
+from timemory.bundle import marker
+
+
+@marker(["wall_clock", "caliper_marker"])
+def foo():
+    # ....
+    pass
+
+
+@marker(get_components)
 def generate(phantom, args):
     """Return the simulated data for the given phantom."""
     # with trace(get_components):
@@ -49,6 +83,7 @@ def generate(phantom, args):
     return [prj, ang, obj]
 
 
+@marker(get_components)
 def run(phantom, algorithm, args):
     """Run reconstruction benchmarks for phantoms.
 
@@ -87,7 +122,9 @@ def run(phantom, algorithm, args):
         _kwargs["accelerated"] = True
 
     print("kwargs: {}".format(_kwargs))
-    rec = tomopy.recon(prj, ang, **_kwargs)
+    with marker(get_components, key="recon"):
+        # with trace(get_components):
+        rec = tomopy.recon(prj, ang, **_kwargs)
     print("completed reconstruction...")
 
     rec = misc.normalize(rec)
@@ -184,11 +221,26 @@ if __name__ == "__main__":
         help="When used with '--subset', do no center subset",
         action="store_true",
     )
+    parser.add_argument(
+        "-c",
+        "--components",
+        help="timemory component types",
+        default=components,
+        choices=timemory.component.get_available_types(),
+        nargs="*",
+        type=str,
+    )
 
     args = parser.parse_args()
 
+    components = args.components
+
     try:
+        timemory.settings.cout_output = False
+        timemory.settings.flamegraph_output = False
+        timemory.init([__file__] + sys.argv[1:])
         run(args.phantom, args.algorithm, args)
+        timemory.finalize()
     except Exception as e:
         exc_type, exc_value, exc_traceback = sys.exc_info()
         traceback.print_exception(exc_type, exc_value, exc_traceback, limit=5)

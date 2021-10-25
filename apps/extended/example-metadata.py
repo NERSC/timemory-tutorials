@@ -29,7 +29,7 @@ def run(n):
 
 
 if __name__ == "__main__":
-    timemory.init([__file__] + sys.argv[1:])
+    timemory.init([__file__])
 
     parser = argparse.ArgumentParser()
     parser.add_argument(

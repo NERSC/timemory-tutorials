@@ -1,17 +1,18 @@
 #!/usr/bin/env python
-
 import sys
 import time
 import argparse
 import numpy as np
 import timemory
-from timemory.profiler import profile
+from timemory.trace import trace
 
 
+@trace(["wall_clock", "peak_rss"])
 def fibonacci(n):
     return n if n < 2 else (fibonacci(n - 1) + fibonacci(n - 2))
 
 
+@trace(["wall_clock", "peak_rss"])
 def inefficient(n):
     a = 0
     for i in range(n):
@@ -24,19 +25,15 @@ def inefficient(n):
 
 def run(n):
     print(f"Running fibonacci({n})...")
-    with profile(["wall_clock"]):
-        ret = fibonacci(n) + fibonacci(n % 5 + 1)
+    ret = fibonacci(n) + fibonacci(n % 5 + 1)
     print(f"Running inefficient({n})...")
-    with profile(["wall_clock"]):
-        ret = inefficient(n) / ret
-    return ret
+    return inefficient(n) / ret
 
 
 if __name__ == "__main__":
-    timemory.init([__file__] + sys.argv[1:])
-    timemory.settings.precision = 6
+    timemory.init([__file__])
 
-    parser = argparse.ArgumentParser(usage="<script> -n [VALUE]")
+    parser = argparse.ArgumentParser()
     parser.add_argument(
         "-n",
         "--nfib",
@@ -45,7 +42,7 @@ if __name__ == "__main__":
         default=19,
     )
 
-    args = parser.parse_args()
+    args = parser.parse_args(sys.argv[1:])
 
     ts = time.perf_counter()
     ans = run(args.nfib)

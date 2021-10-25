@@ -1,16 +1,20 @@
 #!/usr/bin/env python
+
 import sys
 import time
 import argparse
 import numpy as np
 import timemory
-from timemory.trace import trace
+from timemory.profiler import profile
+from timemory.profiler import config as profiler_config
 
 
+@profile(["wall_clock"], flat=True, timeline=True)
 def fibonacci(n):
     return n if n < 2 else (fibonacci(n - 1) + fibonacci(n - 2))
 
 
+@profile(["wall_clock"], flat=False, timeline=True)
 def inefficient(n):
     a = 0
     for i in range(n):
@@ -29,10 +33,10 @@ def run(n):
 
 
 if __name__ == "__main__":
-    timemory.init([__file__] + sys.argv[1:])
-    timemory.settings.precision = 6
+    timemory.init([__file__])
 
-    parser = argparse.ArgumentParser()
+    profiler_config.include_filename = False
+    parser = argparse.ArgumentParser(usage="<script> -n [VALUE]")
     parser.add_argument(
         "-n",
         "--nfib",
@@ -41,14 +45,13 @@ if __name__ == "__main__":
         default=19,
     )
 
-    args = parser.parse_args(sys.argv[1:])
+    args = parser.parse_args()
 
-    with trace(["wall_clock", "peak_rss"]):
-        ts = time.perf_counter()
-        ans = run(args.nfib)
-        ts = time.perf_counter() - ts
-        print("")
-        print("Solution           :  {:12.6e}".format(ans))
-        print("Elapsed time (sec) :  {:12.6f}".format(ts))
+    ts = time.perf_counter()
+    ans = run(args.nfib)
+    ts = time.perf_counter() - ts
+    print("")
+    print("Solution           :  {:12.6e}".format(ans))
+    print("Elapsed time (sec) :  {:12.6f}".format(ts))
 
     timemory.finalize()

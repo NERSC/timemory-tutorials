@@ -4,16 +4,13 @@ import sys
 import time
 import argparse
 import numpy as np
-import timemory
-from timemory.profiler import profile
 
 
-@profile(["wall_clock"], flat=True)
 def fibonacci(n):
     return n if n < 2 else (fibonacci(n - 1) + fibonacci(n - 2))
 
 
-@profile(["wall_clock"], timeline=True)
+@profile
 def inefficient(n):
     a = 0
     for i in range(n):
@@ -24,6 +21,7 @@ def inefficient(n):
     return arr.sum()
 
 
+@profile
 def run(n):
     print(f"Running fibonacci({n})...")
     ret = fibonacci(n) + fibonacci(n % 5 + 1)
@@ -32,10 +30,8 @@ def run(n):
 
 
 if __name__ == "__main__":
-    timemory.init([__file__] + sys.argv[1:])
-    timemory.settings.precision = 6
 
-    parser = argparse.ArgumentParser(usage="<script> -n [VALUE]")
+    parser = argparse.ArgumentParser()
     parser.add_argument(
         "-n",
         "--nfib",
@@ -52,5 +48,3 @@ if __name__ == "__main__":
     print("")
     print("Solution           :  {:12.6e}".format(ans))
     print("Elapsed time (sec) :  {:12.6f}".format(ts))
-
-    timemory.finalize()

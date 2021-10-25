@@ -35,12 +35,12 @@ def run(n):
 
 
 if __name__ == "__main__":
-    timemory.settings.precision = 6
     timemory.settings.timing_units = "usec"
     timemory.settings.auto_output = False
     timemory.settings.time_output = True
     timemory.settings.flat_profile = False
     timemory.settings.timeline_profile = True
+    timemory.init([__file__])
 
     # below are meaningless in a timeline profile
     os.environ["TIMEMORY_PRINT_COUNT"] = "OFF"

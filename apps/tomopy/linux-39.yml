@@ -1,0 +1,21 @@
+name: tomopy
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - dxchange
+  - h5py
+  - mkl ["blas=*=openblas"]
+  - mkl-devel ["blas=*=openblas"]
+  - mkl_fft
+  - numexpr
+  - numpy ["blas=*=openblas"]
+  - opencv>=3.4 ["blas=*=openblas"]
+  - python=3.9
+  - pywavelets
+  - scikit-build
+  - scikit-image
+  - scipy
+  - setuptools_scm
+  - setuptools_scm_git_archive
+  - six

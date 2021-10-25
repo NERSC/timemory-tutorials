@@ -1,19 +1,18 @@
 #!/usr/bin/env python
 
 import os
+import sys
 import time
 import argparse
 import numpy as np
 import timemory
 from timemory.bundle import marker
-from timemory.component import CaliperConfig
-
 
 components = []
 
 
-def get_tools(extra=[]):
-    return ["caliper_marker"] + extra + timemory.settings.global_components.split()
+def get_tools():
+    return components
 
 
 @marker(get_tools)
@@ -41,8 +40,11 @@ def run(n):
 
 
 if __name__ == "__main__":
+    timemory.init([__file__])
 
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(
+        usage="<script> -n [VALUE] -c [COMPONENTS...] --timemory-global-components [COMPONENTS...]"
+    )
     parser.add_argument(
         "-n",
         "--nfib",
@@ -52,14 +54,6 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "-c",
-        "--config",
-        help="Caliper configuration",
-        type=str,
-        nargs="*",
-        default=["runtime-report"],
-    )
-    parser.add_argument(
-        "-C",
         "--components",
         help="timemory component types",
         default=["user_global_bundle"],
@@ -72,12 +66,9 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
+    components = args.components
 
-    cfg = CaliperConfig()
-    cfg.configure(",".join(args.config))
-    cfg.start()
-
-    with marker(get_tools(args.components), os.path.basename(__file__)):
+    with marker(get_tools, os.path.basename(__file__)):
         ts = time.perf_counter()
         ans = run(args.nfib)
         ts = time.perf_counter() - ts
@@ -85,5 +76,4 @@ if __name__ == "__main__":
         print("Solution           :  {:12.6e}".format(ans))
         print("Elapsed time (sec) :  {:12.6f}".format(ts))
 
-    cfg.stop()
     timemory.finalize()

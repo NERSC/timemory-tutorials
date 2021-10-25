@@ -1,17 +1,26 @@
 #!/usr/bin/env python
 
+import sys
 import time
 import argparse
 import numpy as np
 import timemory
 from timemory.trace import trace
-from timemory.component import CaliperConfig
 
 
+def get_components(extra=[]):
+    # Specifies which components to utilize in decorators/context-managers.
+    # - Use as a functor with decorators
+    # - Add whichever components you want as the default
+    return ["user_global_bundle"] + timemory.settings.components.split() + extra
+
+
+@trace(get_components)
 def fibonacci(n):
     return n if n < 2 else (fibonacci(n - 1) + fibonacci(n - 2))
 
 
+@trace(get_components)
 def inefficient(n):
     a = 0
     for i in range(n):
@@ -22,7 +31,7 @@ def inefficient(n):
     return arr.sum()
 
 
-@trace(["caliper_marker"])
+@trace(get_components)
 def run(n):
     print(f"Running fibonacci({n})...")
     ret = fibonacci(n) + fibonacci(n % 5 + 1)
@@ -31,6 +40,13 @@ def run(n):
 
 
 if __name__ == "__main__":
+    #
+    # initialize with a reliable first name
+    # and tack on all arguments so timemory
+    # can record them (and, optionally, use
+    # them to generate a unique output folder)
+    #
+    timemory.init([__file__] + sys.argv[1:])
 
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -40,20 +56,8 @@ if __name__ == "__main__":
         type=int,
         default=19,
     )
-    parser.add_argument(
-        "-c",
-        "--config",
-        help="Caliper configuration",
-        type=str,
-        nargs="*",
-        default=["runtime-report"],
-    )
 
     args = parser.parse_args()
-
-    cfg = CaliperConfig()
-    cfg.configure(",".join(args.config))
-    cfg.start()
 
     ts = time.perf_counter()
     ans = run(args.nfib)
@@ -62,5 +66,7 @@ if __name__ == "__main__":
     print("Solution           :  {:12.6e}".format(ans))
     print("Elapsed time (sec) :  {:12.6f}".format(ts))
 
-    cfg.stop()
+    #
+    # generate output
+    #
     timemory.finalize()

@@ -9,31 +9,31 @@ from timemory.profiler import profile
 
 
 def fibonacci(n):
-    with profile(["wall_clock"], key=f"fibonacci({n})", flat=True):
-        return n if n < 2 else (fibonacci(n - 1) + fibonacci(n - 2))
+    return n if n < 2 else (fibonacci(n - 1) + fibonacci(n - 2))
 
 
 def inefficient(n):
-    with profile(["wall_clock"], key=f"inefficient({n})", timeline=True):
-        a = 0
-        for i in range(n):
-            a += i
-            for j in range(n):
-                a += j
-        arr = np.arange(a * n * n * n, dtype=np.double)
-        return arr.sum()
+    a = 0
+    for i in range(n):
+        a += i
+        for j in range(n):
+            a += j
+    arr = np.arange(a * n * n * n, dtype=np.double)
+    return arr.sum()
 
 
 def run(n):
     print(f"Running fibonacci({n})...")
-    ret = fibonacci(n) + fibonacci(n % 5 + 1)
+    with profile(["wall_clock"]):
+        ret = fibonacci(n) + fibonacci(n % 5 + 1)
     print(f"Running inefficient({n})...")
-    return inefficient(n) / ret
+    with profile(["wall_clock"]):
+        ret = inefficient(n) / ret
+    return ret
 
 
 if __name__ == "__main__":
-    timemory.init([__file__] + sys.argv[1:])
-    timemory.settings.precision = 6
+    timemory.init([__file__])
 
     parser = argparse.ArgumentParser(usage="<script> -n [VALUE]")
     parser.add_argument(

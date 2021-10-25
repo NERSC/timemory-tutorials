@@ -61,3 +61,5 @@ timem-*output
 !/bin/.gitignore
 !/lib/.gitignore
 !/include/.gitignore
+
+.gdb_history

@@ -1,4 +1,4 @@
-# Timemory ECP 2021 Tutorial
+# Timemory SC2021 HPCTools Tutorial
 
 ## Overview
 
