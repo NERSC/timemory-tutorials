@@ -24,9 +24,9 @@ def inefficient(n):
 
 def run(n):
     print(f"Running fibonacci({n})...")
-    with profile(["wall_clock"]):
+    with profile(["wall_clock"], flat=True, timeline=False):
         ret = fibonacci(n) + fibonacci(n % 5 + 1)
-    print(f"Running inefficient({n})...")
+    print(f"Running inefficient({n})...", flat=False, timeline=True)
     with profile(["wall_clock"]):
         ret = inefficient(n) / ret
     return ret
