@@ -12,7 +12,7 @@ def get_components(extra=[]):
     # Specifies which components to utilize in decorators/context-managers.
     # - Use as a functor with decorators
     # - Add whichever components you want as the default
-    return ["user_global_bundle"] + timemory.settings.components.split() + extra
+    return timemory.settings.components.split() + extra
 
 
 @trace(get_components)
