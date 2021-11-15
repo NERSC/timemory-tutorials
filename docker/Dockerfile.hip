@@ -3,8 +3,9 @@ FROM ubuntu:20.04 as builder
 ENV SHELL /bin/bash
 ENV BASH_ENV /etc/bash.bashrc
 ENV DEBIAN_FRONTEND noninteractive
-ENV PATH /opt/rocm/bin:/usr/local/cuda/bin:/opt/conda/bin:${PATH}
-ENV LD_LIBRARY_PATH /opt/rocm/lib:/usr/local/cuda/lib:${LD_LIBRARY_PATH}
+ENV PATH /opt/rocm/bin:/opt/conda/bin:${PATH}
+ENV LD_LIBRARY_PATH /opt/rocm/lib:${LD_LIBRARY_PATH}
+ENV CMAKE_PREFIX_PATH /opt/rocm
 
 WORKDIR /tmp/build
 
@@ -12,22 +13,17 @@ RUN apt-get update && \
     apt-get dist-upgrade -y && \
     apt-get install -y software-properties-common wget curl gnupg2 && \
     wget -q -O - https://repo.radeon.com/rocm/rocm.gpg.key | apt-key add - && \
-    wget -O /etc/apt/preferences.d/cuda-repository-pin-600 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin && \
-    wget https://developer.download.nvidia.com/compute/cuda/11.4.0/local_installers/cuda-repo-ubuntu2004-11-4-local_11.4.0-470.42.01-1_amd64.deb && \
-    dpkg -i cuda-repo-ubuntu2004-11-4-local_11.4.0-470.42.01-1_amd64.deb && \
-    apt-key add /var/cuda-repo-ubuntu2004-11-4-local/7fa2af80.pub && \
     add-apt-repository -u -y ppa:ubuntu-toolchain-r/test && \
     echo 'deb [arch=amd64] https://repo.radeon.com/rocm/apt/4.3/ ubuntu main' | tee /etc/apt/sources.list.d/rocm.list && \
     apt-get update && \
     apt-get dist-upgrade -y && \
-    apt-get install -y build-essential python3 google-perftools likwid git-core bash-completion rocm-dev cuda libnuma-dev libboost1.71-all-dev libtbb-dev libgoogle-perftools-dev libunwind-dev libmpich-dev libpapi-dev libpfm4-dev libdw-dev
+    apt-get install -y build-essential python3 google-perftools likwid git-core bash-completion rocm-dev libnuma-dev libboost1.71-all-dev libtbb-dev libgoogle-perftools-dev libunwind-dev libmpich-dev libpapi-dev libpfm4-dev libdw-dev
 
 SHELL [ "/bin/bash", "--login", "-c" ]
 
 ENV CC=cc
-ENV CXX=c++
+ENV CXX=hipcc
 ENV FC=gfortran
-ENV CUDACXX=nvcc
 
 RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh && \
     bash miniconda.sh -b -p /opt/conda && \
@@ -40,11 +36,11 @@ RUN git clone https://github.com/NERSC/timemory.git timemory-source && \
     which -a python && \
     cd timemory-source && \
     python setup.py install \
-        --enable-{caliper,cuda,cupti,likwid,gotcha,mpi,gperftools,papi,perfetto,kokkos,kokkos-config,dyninst,build-dyninst} \
+        --enable-{caliper,hip,likwid,gotcha,mpi,gperftools,papi,perfetto,kokkos,kokkos-config,dyninst,build-dyninst} \
         --build-type=RelWithDebInfo \
         -G Unix\ Makefiles \
         -j 12 \
-        -- -DDYNINST_BUILD_{ELFUTILS,LIBIBERTY}=ON -DCALIPER_WITH_{LIBUNWIND,LIBDW,LIBPFM,SAMPLER,MPI,MPIT,NVTX,PAPI}=ON && \
+        -- -DDYNINST_BUILD_{ELFUTILS,LIBIBERTY}=ON -DCALIPER_WITH_{LIBUNWIND,LIBDW,LIBPFM,SAMPLER,MPI,MPIT,ROCM,PAPI}=ON && \
     python -m pip install -r .requirements/runtime.txt && \
     python -m pip install -r .requirements/mpi_runtime.txt
 
