@@ -1,59 +1,62 @@
-FROM ecpe4s/ubuntu18.04-e4s:latest as builder
+FROM ubuntu:20.04 as builder
 
 ENV SHELL /bin/bash
 ENV BASH_ENV /etc/bash.bashrc
 ENV DEBIAN_FRONTEND noninteractive
+ENV PATH /opt/rocm/bin:/usr/local/cuda/bin:/opt/conda/bin:${PATH}
+ENV LD_LIBRARY_PATH /opt/rocm/lib:/usr/local/cuda/lib:${LD_LIBRARY_PATH}
 
-RUN spack env create --with-view /opt/view timemory && \
-    spack \
-    --env timemory \
-    install \
-        caliper \
-        cmake \
-        cuda \
-        dyninst \
-        boost \
-        gotcha \
-        mpich \
-        ninja \
-        papi@5.7.0 \
-        python@3.7.6 \
-        py-pip && \
-    spack env activate /opt/spack/var/spack/environments/timemory --sh -d >> /etc/profile.d/z10_spack_environment.sh
+WORKDIR /tmp/build
+
+RUN apt-get update && \
+    apt-get dist-upgrade -y && \
+    apt-get install -y software-properties-common wget curl gnupg2 && \
+    wget -q -O - https://repo.radeon.com/rocm/rocm.gpg.key | apt-key add - && \
+    wget -O /etc/apt/preferences.d/cuda-repository-pin-600 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin && \
+    wget https://developer.download.nvidia.com/compute/cuda/11.4.0/local_installers/cuda-repo-ubuntu2004-11-4-local_11.4.0-470.42.01-1_amd64.deb && \
+    dpkg -i cuda-repo-ubuntu2004-11-4-local_11.4.0-470.42.01-1_amd64.deb && \
+    apt-key add /var/cuda-repo-ubuntu2004-11-4-local/7fa2af80.pub && \
+    add-apt-repository -u -y ppa:ubuntu-toolchain-r/test && \
+    echo 'deb [arch=amd64] https://repo.radeon.com/rocm/apt/4.3/ ubuntu main' | tee /etc/apt/sources.list.d/rocm.list && \
+    apt-get update && \
+    apt-get dist-upgrade -y && \
+    apt-get install -y build-essential python3 google-perftools likwid git-core bash-completion rocm-dev cuda libnuma-dev libboost1.71-all-dev libtbb-dev libgoogle-perftools-dev libunwind-dev libmpich-dev libpapi-dev libpfm4-dev libdw-dev
 
 SHELL [ "/bin/bash", "--login", "-c" ]
 
-WORKDIR /opt/software
+ENV CC=cc
+ENV CXX=c++
+ENV FC=gfortran
+ENV CUDACXX=nvcc
 
-# for CUDA include directories and libraries
-ENV CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH}:/opt/view/targets/x86_64-linux
+RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh && \
+    bash miniconda.sh -b -p /opt/conda && \
+    conda init bash && \
+    conda config --set always_yes no --set changeps1 no && \
+    conda update -y -c defaults -n base conda && \
+    conda install -y -n base -c conda-forge -c defaults python=3.8 cmake=3.20.5 scikit-build numpy matplotlib-base pillow cython pip
 
 RUN git clone https://github.com/NERSC/timemory.git timemory-source && \
-    source /opt/spack/share/spack/setup-env.sh && \
-    spack load cuda && \
     which -a python && \
-    python -m pip install --user -r timemory-source/.requirements/runtime.txt && \
-    python -m pip install --user -r timemory-source/.requirements/mpi_runtime.txt && \
-    cmake -B timemory-build \
-        -DCMAKE_INSTALL_PREFIX=/opt/view \
-        -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-        -DBUILD_SHARED_LIBS=ON \
-        -DBUILD_STATIC_LIBS=ON \
-        -DTIMEMORY_USE_{CALIPER,CUDA,CUPTI,DYNINST,GOTCHA,MPI,PAPI,PYTHON}=ON \
-        -DTIMEMORY_BUILD_{CALIPER,GOTCHA,KOKKOS_CONFIG}=OFF \
-        -DTIMEMORY_BUILD_{TOOLS,KOKKOS_TOOLS}=ON \
-        -DTIMEM_PAPI_TARGET=PAPI::papi-shared \
-        timemory-source && \
-    cmake --build timemory-build --target all --parallel 8 && \
-    cmake --build timemory-build --target install
+    cd timemory-source && \
+    python setup.py install \
+        --enable-{caliper,cuda,cupti,likwid,gotcha,mpi,gperftools,papi,perfetto,kokkos,kokkos-config,dyninst,build-dyninst} \
+        --build-type=RelWithDebInfo \
+        -G Unix\ Makefiles \
+        -j 12 \
+        -- -DDYNINST_BUILD_{ELFUTILS,LIBIBERTY}=ON -DCALIPER_WITH_{LIBUNWIND,LIBDW,LIBPFM,SAMPLER,MPI,MPIT,NVTX,PAPI}=ON && \
+    python -m pip install -r .requirements/runtime.txt && \
+    python -m pip install -r .requirements/mpi_runtime.txt
+
+RUN apt-get autoclean && \
+    apt-get autoremove --purge && \
+    conda clean -a -y && \
+    rm -rf /tmp/*
 
 # Bare OS image to run the installed executables
-FROM ecpe4s/ubuntu18.04-e4s:latest
+FROM ubuntu:20.04
 
-COPY --from=builder /opt/view /opt/view
-COPY --from=builder /root/.local /root/.local
-COPY --from=builder /opt/spack/var/spack/environments /opt/spack/var/spack/environments
-COPY --from=builder /etc/profile.d/z10_spack_environment.sh /etc/profile.d/z10_spack_environment.sh
+COPY --from=builder / /
 
 RUN echo 'export PS1="\[$(tput bold)\]\[$(tput setaf 1)\][timemory]\[$(tput setaf 2)\] \u\[$(tput sgr0)\]:\w $ \[$(tput sgr0)\]"' >> ~/.bashrc
 
@@ -64,8 +67,6 @@ ENV LC_ALL C
 ENV SHELL /bin/bash
 ENV BASH_ENV /etc/bash.bashrc
 ENV DEBIAN_FRONTEND noninteractive
-ENV PATH ${PATH}:/root/.local/bin
-ENV PYTHONPATH ${PYTHONPATH}:/root/.local/lib/python3.7/site-packages
 
 USER root
 WORKDIR /home
