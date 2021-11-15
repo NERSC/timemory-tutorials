@@ -37,7 +37,7 @@ docker run -it --rm --cap-add=SYS_ADMIN -v $PWD:/home/timemory-tutorials jrmadse
 
 ```console
 salloc -q interactive -C haswell -A ntrain -N 1 -c 8 -t 01:00:00
-srun shifter --image=jrmadsen/timemory:hpctools-sc2021-cpu -- /bin/bash
+srun --pty shifter --image=jrmadsen/timemory:hpctools-sc2021-cpu -- /bin/bash
 ```
 
 ### CUDA Support
@@ -67,5 +67,5 @@ docker run -it --rm --cap-add=SYS_ADMIN -v $PWD:/home/timemory-tutorials jrmadse
 
 ```console
 salloc -A ntrain -N 1 -C gpu -G 1 -n 1 -c 20 -t 01:00:00
-srun shifter --image=jrmadsen/timemory:hpctools-sc2021-gpu -- /bin/bash
+srun --pty shifter --image=jrmadsen/timemory:hpctools-sc2021-gpu -- /bin/bash
 ```
