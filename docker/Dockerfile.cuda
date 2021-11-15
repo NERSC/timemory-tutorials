@@ -18,7 +18,7 @@ RUN apt-get update && \
     add-apt-repository -u -y ppa:ubuntu-toolchain-r/test && \
     apt-get update && \
     apt-get dist-upgrade -y && \
-    apt-get install -y build-essential python3 google-perftools likwid git-core bash-completion cuda libboost1.71-all-dev libtbb-dev libgoogle-perftools-dev libunwind-dev libmpich-dev libpapi-dev libpfm4-dev libdw-dev
+    apt-get install -y build-essential python3 google-perftools likwid git-core bash-completion cuda libboost1.71-all-dev libtbb-dev libgoogle-perftools-dev libunwind-dev libopenmpi-dev libpapi-dev libpfm4-dev libdw-dev
 
 SHELL [ "/bin/bash", "--login", "-c" ]
 
@@ -38,7 +38,7 @@ RUN git clone https://github.com/NERSC/timemory.git timemory-source && \
     which -a python && \
     cd timemory-source && \
     python setup.py install \
-        --enable-{caliper,cuda,cupti,likwid,gotcha,mpi,gperftools,papi,perfetto,kokkos,kokkos-config,dyninst,build-dyninst} \
+        --enable-{caliper,cuda,cupti,likwid,gotcha,mpi,gperftools,papi,perfetto,dyninst,build-dyninst} \
         --build-type=RelWithDebInfo \
         -G Unix\ Makefiles \
         -j 12 \
@@ -56,9 +56,9 @@ FROM ubuntu:20.04
 
 COPY --from=builder / /
 
-RUN echo 'export PS1="\[$(tput bold)\]\[$(tput setaf 1)\][timemory]\[$(tput setaf 2)\] \u\[$(tput sgr0)\]:\w $ \[$(tput sgr0)\]"' >> ~/.bashrc
+RUN echo 'export PS1="\[$(tput bold)\]\[$(tput setaf 1)\][timemory]\[$(tput setaf 2)\] \u\[$(tput sgr0)\]:\w $ \[$(tput sgr0)\]"' >> ~/.bashrc && \
+    cp ~/.bashrc /etc/profile.d/x10_bashrc.sh
 
-ENV HOME /root
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US
 ENV LC_ALL C
@@ -66,9 +66,13 @@ ENV SHELL /bin/bash
 ENV BASH_ENV /etc/bash.bashrc
 ENV DEBIAN_FRONTEND noninteractive
 
-USER root
+ENV PATH /opt/conda/bin:${PATH}:/usr/local/cuda/bin
+ENV CUDA_HOME "/usr/local/cuda-11.4"
+ENV NVIDIA_REQUIRE_CUDA "cuda>=11.4"
+ENV NVIDIA_VISIBLE_DEVICES "all"
+ENV NVIDIA_DRIVER_CAPABILITIES "compute,utility"
+
 WORKDIR /home
 SHELL [ "/bin/bash", "--login", "-c" ]
 
-# ENTRYPOINT [ "/runtime-entrypoint.sh" ]
 ENTRYPOINT ["/bin/bash", "--rcfile", "/etc/profile", "-l"]

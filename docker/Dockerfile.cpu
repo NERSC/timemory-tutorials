@@ -32,7 +32,7 @@ RUN git clone https://github.com/NERSC/timemory.git timemory-source && \
     which -a python && \
     cd timemory-source && \
     python setup.py install \
-    --enable-{caliper,likwid,gotcha,mpi,gperftools,papi,perfetto,kokkos,kokkos-config,dyninst,build-dyninst} \
+    --enable-{caliper,likwid,gotcha,mpi,gperftools,papi,perfetto,dyninst,build-dyninst} \
     --build-type=RelWithDebInfo \
     -G Unix\ Makefiles \
     -j 12 \
@@ -50,9 +50,9 @@ FROM ubuntu:20.04
 
 COPY --from=builder / /
 
-RUN echo 'export PS1="\[$(tput bold)\]\[$(tput setaf 1)\][timemory]\[$(tput setaf 2)\] \u\[$(tput sgr0)\]:\w $ \[$(tput sgr0)\]"' >> ~/.bashrc
+RUN echo 'export PS1="\[$(tput bold)\]\[$(tput setaf 1)\][timemory]\[$(tput setaf 2)\] \u\[$(tput sgr0)\]:\w $ \[$(tput sgr0)\]"' >> ~/.bashrc && \
+    cp ~/.bashrc /etc/profile.d/x10_bashrc.sh
 
-ENV HOME /root
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US
 ENV LC_ALL C
@@ -60,9 +60,9 @@ ENV SHELL /bin/bash
 ENV BASH_ENV /etc/bash.bashrc
 ENV DEBIAN_FRONTEND noninteractive
 
-USER root
+ENV PATH /opt/conda/bin:${PATH}:/usr/local/cuda/bin
+
 WORKDIR /home
 SHELL [ "/bin/bash", "--login", "-c" ]
 
-# ENTRYPOINT [ "/runtime-entrypoint.sh" ]
 ENTRYPOINT ["/bin/bash", "--rcfile", "/etc/profile", "-l"]

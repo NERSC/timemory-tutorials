@@ -11,7 +11,7 @@ WORKDIR /tmp/build
 
 RUN apt-get update && \
     apt-get dist-upgrade -y && \
-    apt-get install -y software-properties-common wget curl gnupg2 && \
+    apt-get install -y software-properties-common wget curl gnupg2 kmod && \
     wget -q -O - https://repo.radeon.com/rocm/rocm.gpg.key | apt-key add - && \
     add-apt-repository -u -y ppa:ubuntu-toolchain-r/test && \
     echo 'deb [arch=amd64] https://repo.radeon.com/rocm/apt/4.3/ ubuntu main' | tee /etc/apt/sources.list.d/rocm.list && \
@@ -56,7 +56,7 @@ COPY --from=builder / /
 
 RUN echo 'export PS1="\[$(tput bold)\]\[$(tput setaf 1)\][timemory]\[$(tput setaf 2)\] \u\[$(tput sgr0)\]:\w $ \[$(tput sgr0)\]"' >> ~/.bashrc
 
-ENV HOME /root
+ENV HOME /home
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US
 ENV LC_ALL C
@@ -64,7 +64,6 @@ ENV SHELL /bin/bash
 ENV BASH_ENV /etc/bash.bashrc
 ENV DEBIAN_FRONTEND noninteractive
 
-USER root
 WORKDIR /home
 SHELL [ "/bin/bash", "--login", "-c" ]
 
