@@ -1,3 +1,5 @@
+This is now a read-only archive
+
 # Timemory SC2021 HPCTools Tutorial
 
 ## Overview
